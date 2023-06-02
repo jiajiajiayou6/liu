@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下午网络请求留言板篇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        input,
+        #text {
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        form {
+            width: 560px;
+            height: 350px;
+            border: 1px dashed black;
+            line-height: 60px;
+
+            margin: auto;
+            border-radius: 25px;
+            padding: 60px;
+            background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+        }
+
+        .btn {
+            padding: 5px 20px;
+            margin-left: 18px;
+            border-radius: 5px;
+            background-image: linear-gradient(0deg, #fff1eb 0%, #ace0f9 100%);
+            border: 1px solid gray
+        }
+
+        #box {
+            border: 1px dashed black;
+            width: 640px;
+            margin: auto;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 25px;
+            background-image: linear-gradient(0deg, #fff1eb 0%, #ace0f9 100%);
+        }
+
+        .lybox {
+            line-height: 40px;
+            margin-left: 40px;
+            margin-right: 40px;
+            border-bottom: 1px dashed white;
+        }
+
+        img {
+            width: 200px;
+            height: 150px;
+            border-radius: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="#">
+        <h1>留言板</h1>
+        标题:<input type="text" name="title" placeholder="标题"><br>
+        留言内容：<textarea name="content" id="text" cols="30" rows="10" placeholder="留言内容"></textarea><br>
+        留言人：<input type="text" name="name" placeholder="留言人">
+        <input type="submit" class="btn" value="确定">
+    </form>
+    <div id="box">
+        <!-- <div class="lybox">
+            留言人：<span id="lyname"></span><br>
+            留言标题：<span id="lytitle"></span><br>
+            留言内容：<span id="con"></span><br>
+            留言时间：<span id="lytime"></span><br>
+            <a href="#">删除</a>
+        </div> -->
+    </div>
+    <script>
+        const box = document.getElementById("box");
+        const form = document.querySelector("form");
+        (function () {
+            getlist();
+            form.addEventListener("submit", tijiaofun);
+            box.addEventListener("click", shanchufun);
+        })();
+        //删除
+        function shanchufun() {
+            event.preventDefault();
+            if (event.target.innerHTML == "删除") {
+                console.log(event.target.nodeName);
+                console.log(event.target.innerHTML);
+                let id = event.target.dataset.id;
+                const xhr = new XMLHttpRequest();
+                xhr.open("get", 'https://liu.zzgoodqc.cn/lyb/del?id=' + id)
+                xhr.send();
+                xhr.responseType = 'json';
+                xhr.onload = function () {
+                    console.log(xhr.response);
+                    getlist();
+                };
+            };
+        };
+        //添加
+        function tijiaofun() {
+            event.preventDefault();
+            let data = new FormData(this);
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", 'https://liu.zzgoodqc.cn/lyb/add');
+            xhr.send(data);
+            xhr.responseType = "json";
+            xhr.onload = function () {
+                console.log(xhr.response);
+                form.reset();
+                getlist();
+            }
+        };
+        //获取接口数据
+        function getlist() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://liu.zzgoodqc.cn/lyb/list');
+            xhr.send();
+            xhr.responseType = "json";
+            xhr.onload = function () {
+                console.log(xhr.response);
+                showlist(xhr.response);
+            };
+        };
+        //渲染
+        function showlist(data) {
+            data = data.data.sort((a, b) => {
+                return b.id - a.id;
+            });
+            let html = "";
+            data.forEach((item, index) => {
+                html += `
+                <div class="lybox">
+                    留言人：<span id="lyname">${item.name}</span><br>
+                    留言标题：<span id="lytitle">${item.title}</span><br>
+                    留言内容：<span id="con">${item.content}</span><br>
+                    留言时间：<span id="lytime">${item.created_at}</span><br>
+                    <a href="#" data-id=${item.id}>删除</a>
+                </div>
+                `;
+            });
+            box.innerHTML = html;
+        };
+    </script>
+</body>
+
+</html>
+<!-- 日报
+今日学习：网络请求  ajax
+今日任务：已完成
+今日问题：分页有点不熟
+单词：
+XMLHttpREquest
+xhr.open()
+xhr.send()
+fetch -->

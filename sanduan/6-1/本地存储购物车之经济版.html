@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>本地存储购物车之经济版</title>
+</head>
+
+<body>
+    <div style="width:1000px;margin: auto;">
+        <h1 style="text-align: center;">真划算</h1>
+        <table border="1"
+            style="width:1000px;border-collapse:collapse;text-align: center;line-height:40px;margin: auto;">
+            <tr style="background:#e9e9e9;font-weight: bold;">
+                <td>商品</td>
+                <td>单价（元）</td>
+                <td>颜色</td>
+                <td>库存</td>
+                <td>好评率</td>
+                <td>操作</td>
+            </tr>
+            <tbody id="list"></tbody>
+        </table>
+    </div>
+
+    <div style="width:1000px;margin: auto;">
+        <h1 style="text-align: center;">购物车</h1>
+        <table border="1"
+            style="width:1000px;border-collapse:collapse;text-align: center;line-height:40px;margin: auto;">
+            <tr style="background:#e9e9e9;font-weight: bold;">
+                <td>商品</td>
+                <td>单价（元）</td>
+                <td>数量</td>
+                <td>金额</td>
+                <td>操作</td>
+            </tr>
+            <tbody id="shopCar"></tbody>
+        </table>
+    </div>
+
+</body>
+<script>
+    var goodsArr = [
+        {
+            goods: '苹果',
+            price: 10,
+            colors: '红色',
+            stock: 100,
+            review: '100%'
+        },
+        {
+            goods: '香蕉',
+            price: 15,
+            colors: '黄色',
+            stock: 99,
+            review: '99%'
+        },
+        {
+            goods: '哈密瓜',
+            price: 20,
+            colors: '绿色',
+            stock: 99,
+            review: '99%'
+        }
+    ]
+    // 购物车数组
+    var shopArr = []
+
+    // 页面加载
+    window.onload = function () {
+        // 显示商品列表
+        getGoodsList()
+        // 显示渲染商品列表
+        goodsList()
+
+        // 显示购物车列表
+        getShopCar()
+        // 显示渲染购物车列表
+        showShop()
+    }
+
+    // 获取商品列表数据
+    function getGoodsList() {
+        var data = localStorage.getItem('goods')
+        if (data) {
+            goodsArr = JSON.parse(data)
+        } else {
+            localStorage.setItem('goods', JSON.stringify(goodsArr))
+        }
+    }
+
+    // 渲染商品列表
+    function goodsList() {
+        var str = ''
+        for (i in goodsArr) {
+            str += `<tr>
+                        <td>${goodsArr[i].goods}</td>
+                        <td>${goodsArr[i].price}</td>
+                        <td>${goodsArr[i].colors}</td>
+                        <td>${goodsArr[i].stock}</td>
+                        <td>${goodsArr[i].review}</td>
+                        <td><button onclick="shopAdd(${i})">加入购物车</button></td>   
+                    </tr>`
+        }
+        document.getElementById('list').innerHTML = str
+    }
+
+    // 获取购物车数据
+    function getShopCar() {
+        var shopData = localStorage.getItem('shopCar')
+        if (shopData) {
+            shopArr = JSON.parse(shopData)
+        }
+    }
+
+    // 加入购物车
+    function shopAdd(index) {
+        // 加入购物车一次 库存就-1
+        if (goodsArr[index].stock <= 1) {
+            alert('库存不足')
+            return
+        }
+        goodsArr[index].stock--
+        localStorage.setItem('goods', JSON.stringify(goodsArr))
+        goodsList()
+
+
+        // 判断购物车是否有相同商品 如果有的话只添加数量
+        for (i in shopArr) {
+            if (shopArr[i].goods == goodsArr[index].goods) {
+                shopArr[i].num++
+                localStorage.setItem('shopCar', JSON.stringify(shopArr))
+                return showShop()
+            }
+        }
+        var obj = {
+            goods: goodsArr[index].goods,
+            price: goodsArr[index].price,
+            num: 1,
+        }
+        shopArr.push(obj)
+        localStorage.setItem('shopCar', JSON.stringify(shopArr))
+        showShop()
+    }
+
+    // 显示购物车列表
+    function showShop() {
+        var goods = ''
+        for (i in shopArr) {
+            goods += `<tr>
+                        <td>${shopArr[i].goods}</td>
+                        <td>${shopArr[i].price}</td>
+                        <td>
+                            <button onclick='plus(${i})'>+</button>
+                            <span class="a">${shopArr[i].num}</span>
+                            <button onclick='reduce(${i})'>-</button>
+                        </td>
+                        <td class='money'>${shopArr[i].price * shopArr[i].num}</td>
+                        <td><button onclick="shopDel(${i})">删除</button></td>   
+                    </tr>`
+        }
+        document.getElementById('shopCar').innerHTML = goods
+    }
+
+    // 计算库存
+    function save(index, stockFun) {
+        for (i in goodsArr) {
+            if (goodsArr[i].goods == shopArr[index].goods) {
+                stockFun()
+            }
+        }
+        localStorage.setItem('goods', JSON.stringify(goodsArr))
+        goodsList()
+    }
+
+    // 数量加
+    function plus(index) {
+        if (shopArr[index].num >= goodsArr[i].stock) {
+            alert('商品已售完')
+            return
+        } else {
+            // 点击加号 数量就+1
+            shopArr[index].num++
+            document.getElementsByClassName('a')[index].innerHTML = shopArr[index].num
+            // 调用计算库存
+            save(index, function () {
+                goodsArr[i].stock -= 1    //当数量+1时，库存就-1
+            })
+        }
+        localStorage.setItem('goods', JSON.stringify(goodsArr))
+        localStorage.setItem('shopCar', JSON.stringify(shopArr))
+        goodsList()
+        showShop()
+    }
+
+    // 数量减
+    function reduce(index) {
+        if (shopArr[index].num <= 1) {
+            alert('最少买一个')
+            return;
+        } else {
+            // 点击减号 数量就-1
+            shopArr[index].num--
+            document.getElementsByClassName('a')[index].innerHTML = shopArr[index].num
+            // 调用计算库存
+            save(index, function () {
+                goodsArr[i].stock += 1  //当数量-1时，库存就+1
+            })
+        }
+        localStorage.setItem('goods', JSON.stringify(goodsArr))
+        localStorage.setItem('shopCar', JSON.stringify(shopArr))
+        goodsList()
+        showShop()
+    }
+
+    // 删除
+    function shopDel(index) {
+        for (i in goodsArr) {
+            if (goodsArr[i].goods == shopArr[index].goods) {
+                goodsArr[i].stock += shopArr[index].num   //删除购物车商品之后库存恢复到原来数据
+            }
+        }
+        shopArr.splice(index, 1)
+        localStorage.setItem('goods', JSON.stringify(goodsArr))
+        localStorage.setItem('shopCar', JSON.stringify(shopArr))
+        goodsList()
+        showShop()
+    }
+</script>
+
+</html>
+日报
+今日学习： 本地存储
+今日作业： 延迟登录(已完成)  购物车(已完成40%)
+今日问题： 不熟

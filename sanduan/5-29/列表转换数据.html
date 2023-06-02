@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            line-height: 40px;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        li:hover {
+            background-color: aquamarine;
+        }
+
+        .son1 {
+            width: 150px;
+            height: 400px;
+            border: 1px solid black;
+            float: left;
+            text-align: center;
+        }
+
+        .son2 {
+            width: 150px;
+            height: 400px;
+            float: left;
+            text-align: center;
+            line-height: 400px;
+        }
+
+        #leftdiv {
+            width: 150px;
+            height: 400px;
+            text-align: center;
+            display: block;
+        }
+
+
+        .son3 {
+            width: 150px;
+            height: 400px;
+            border: 1px solid black;
+            float: left;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="son1">
+            <div style="background-color: cornflowerblue;height: 40px;line-height: 40px;"><b>列表一</b></div>
+            <ulsize="10" id="leftdiv">
+                </usize=>
+        </div>
+        <div class="son2">
+            <input type="button" value="添加" id="sun221">
+            <input type="button" value="删除" id="sun222">
+        </div>
+        <div class="son3">
+            <div style="background-color: cornflowerblue; height: 40px;line-height: 40px;"><b>列表二</b></div>
+            <ul size="10" id="son3"></ul>
+        </div>
+    </div>
+    <script>
+        var leftsun = ['SQL', 'C', 'C++', 'Python', 'JavaScript'];
+        var rightsun = ['Java', 'C#', 'G0', 'PHP'];
+        selectleft = document.getElementById("leftdiv");
+        selectright = document.getElementById("son3");
+        //左列表渲染
+        function showleftlist() {
+            var html = "";
+            leftsun.forEach((item) => {
+                html += ` <li value='${item}'><input type="checkbox">
+                <span>${item}</span></li>`
+            })
+            selectleft.innerHTML = html;
+        }
+
+        //右列表渲染
+        function showrightlist() {
+            var html = "";
+            rightsun.forEach((item) => {
+                html += `<li value='${item}'><input type="checkbox">
+                <span>${item}</span></li>`
+            })
+            selectright.innerHTML = html;
+        }
+        //自执行函数
+        (function () {
+            showleftlist();
+            showrightlist();
+            selectright.addEventListener('change', function () {
+                console.log(this.value);
+            })
+            //向右添加的按钮
+            sun221.addEventListener('click', function () {
+                var val = selectright.li.value
+                console.log(val);
+                if (!val) {
+                    return false
+                }
+                var index = rightsun.indexOf(val)
+                rightsun.splice(index, 1);
+                leftsun.push(val)
+                showleftlist();
+                showrightlist();
+                selectleft.value = val
+            })
+            //向左删除的按钮
+            sun222.addEventListener('click', function () {
+                var val = selectleft.value
+                if (!val) {
+                    return false
+                }
+                var index = rightsun.indexOf(val)
+                leftsun.splice(index, 1);
+                rightsun.push(val)
+                showleftlist();
+                showrightlist();
+                selectright.value = val
+            })
+        })()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上午本地存储登录后界面</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <button id="tuichu">退出登录</button>
+    <script>
+        const tuichu = document.getElementById("tuichu");
+        let a = 1;
+        window.onload = function () {
+            checkUser();
+            tuichu.addEventListener("click", tuichuFun);
+        };
+        function checkUser() {
+            let user = localStorage.getItem("user");
+            console.log(user);
+            if (user == null) {
+                location.href = "早上本地存储登录.html";
+            } else {
+                user = JSON.parse(user);
+                document.getElementById("box").innerHTML = "欢迎" + user.username + "登录";
+                console.log(user.xuanzhong);
+                if (user.xuanzhong == false) {
+                    localStorage.removeItem("user");
+                };
+            };
+        };
+
+        function timerCallback() {
+            console.log("时间到！");
+            console.log(a);
+            localStorage.removeItem("user");
+        }
+        console.log("开始计时");
+        // 设置10秒后执行回调函数
+        setTimeout(timerCallback, 10000);
+        function tuichuFun() {
+            a = 2;
+            // localStorage.removeItem("user");
+            //设定时器
+            // 定义定时器回调函数
+            if (a == 1) {
+                timerCallback()
+                location.href = "早上本地存储登录.html";
+            } else {
+                location.href = "早上本地存储登录.html";
+            }
+        };
+    </script>
+</body>
+
+</html>

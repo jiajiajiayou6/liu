@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    li:hover {
+        background-image: linear-gradient(0deg, #0c3483 0%, #a2b6df 100%, #6b8cce 100%);
+    }
+
+    body {
+        display: flex;
+    }
+
+    #left,
+    #right {
+        width: 200px;
+        height: 500px;
+        background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);
+        border: 1px solid gray;
+        text-align: center;
+        border-radius: 15px;
+    }
+
+    #contert,
+    #anniubox {
+        width: 200px;
+        height: 500px;
+        line-height: 500px;
+        position: relative;
+        text-align: center;
+        background-color: rgb(255, 255, 255);
+    }
+
+    .icon {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        top: 0px;
+        margin: auto;
+    }
+
+    input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        vertical-align: middle;
+    }
+
+    h3 {
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        background-image: linear-gradient(0deg, #accbee 0%, #e7f0fd 100%);
+        border-radius: 15px;
+    }
+
+    button {
+        padding: 10px 20px;
+        border: 1px solid gray;
+        background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);
+        border-radius: 15px;
+    }
+</style>
+
+<body>
+    <div id="left">
+        <h3><input type="checkbox" id="leftinp">左列表</h3>
+        <ul id="leftul"></ul>
+    </div>
+    <div id="contert">
+        <svg t="1685435864235" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            p-id="1586" width="64" height="64">
+            <path
+                d="M401.07 708.27L206.93 512 403.2 315.73 341.33 256l-256 256 256 256 59.74-59.73z m221.86 0L819.2 512 622.93 315.73 682.67 256l256 256-256 256-59.74-59.73z"
+                p-id="1587" fill="#8a8a8a"></path>
+        </svg>
+    </div>
+    <div id="right">
+        <h3><input type="checkbox" id="rightinp">右列表</h3>
+        <ul id="rightul"></ul>
+    </div>
+    <div id="anniubox">
+        <button id="shangyi">上移</button>
+        <button id="xaiyi">下移</button>
+    </div>
+    <script>
+        let leftsun = [
+            {
+                name: "111111",
+                status: false,
+            },
+            {
+                name: "222222",
+                status: false,
+            },
+            {
+                name: "333333",
+                status: false,
+            },
+            {
+                name: "444444",
+                status: false,
+            },
+            {
+                name: "555555",
+                status: false,
+            },
+        ];
+        let rightsun = [
+            {
+                name: "111111",
+                status: false,
+            },
+            {
+                name: "222222",
+                status: false,
+            },
+            {
+                name: "333333",
+                status: false,
+            },
+            {
+                name: "444444",
+                status: false,
+            },
+            {
+                name: "555555",
+                status: false,
+            },
+        ];
+        const leftul = document.getElementById("leftul");
+        const rightul = document.getElementById("rightul");
+        const leftinp = document.getElementById("leftinp");
+        const rightinp = document.getElementById("rightinp");
+        const icon = document.querySelector(".icon");
+        const shangyi = document.getElementById("shangyi");
+        const xaiyi = document.getElementById("xaiyi");
+        const li = document.querySelectorAll("li");
+        (function () {
+            showleftlist();
+            showrightlist();
+            let index;
+            leftinp.addEventListener("change", leftinpchange);
+            rightinp.addEventListener("change", rightinpchange);
+            leftul.addEventListener("click", leftulfun);
+            rightul.addEventListener("click", rightulfun);
+            icon.addEventListener("click", iconfun);
+            shangyi.addEventListener("click", shangyifun);
+            xaiyi.addEventListener("click", xaiyifun);
+        })();
+        //上移
+        function shangyifun() {
+            console.log(123);
+            // if ()
+            showleftlist();
+            showrightlist();
+        };
+        //下移
+        function xaiyifun() {
+            console.log(456);
+            leftsun.forEach((item, index) => {
+                console.log(leftsun[index]);
+                console.log(leftsun[index].name);
+                // if (leftsun[index] == index) {
+                //选中状态变成未选中
+                //向右列表的的数组添加
+                if (item.status) {
+                    leftsun.push(leftsun[index]);
+                    var tmp = leftsun[index];
+                    leftsun[index] = leftsun[index + 1];
+                    leftsun[index + 1] = tmp;
+                    // }
+                }
+            })
+            showleftlist();
+            showrightlist();
+        };
+        //实现选中左右列表中的转换数据按钮
+        function iconfun() {
+            // leftsun.forEach((item, index) => {
+
+            //     if (item.status) {
+            //         //选中状态变成未选中
+            //         leftsun[index].status = false;
+            //         //向右列表的的数组添加
+            //         rightsun.push(leftsun[index]);
+            //         //像左列表的数组进行删除
+            //         leftsun.splice(index, 1);
+            //     }
+            // });
+
+            // rightsun.forEach((item, index) => {
+            //     if (item.status) {
+            //         //选中状态变成未选中
+            //         rightsun[index].status = false;
+            //         //向右列表的的数组添加
+            //         leftsun.push(rightsun[index]);
+            //         //像左列表的数组进行删除
+            //         rightsun.splice(index, 1);
+            //     }
+            // });
+
+            let leftdel = [], rightdel = [];
+            leftsun = leftsun.filter((item, index) => {
+                if (item.status) {
+                    leftsun[index]
+                    leftdel.push(item);
+                }
+                return item.status == false;
+            })
+            rightsun = rightsun.filter((item, index) => {
+                if (item.status) {
+                    rightsun[index]
+                    rightdel.push(item);
+                }
+                return item.status == false;
+            })
+            console.log(leftsun, rightsun);
+            rightsun = rightsun.concat(leftdel);
+            leftsun = leftsun.concat(rightdel);
+            console.log(rightsun[index].status);
+            showleftlist();
+            showrightlist();
+
+        };
+        //左边ul点击事件，input状态改变
+        function leftulfun() {
+            if (event.target.nodeName == "INPUT") {
+                index = event.target.dataset.index;
+                console.log(index);
+                leftsun[index].status = !leftsun[index].status;
+            }
+        };
+        //右边ul点击事件，input状态改变
+        function rightulfun() {
+            if (event.target.nodeName == "INPUT") {
+                index = event.target.dataset.index;
+                console.log(index);
+                rightsun[index].status = !rightsun[index].status;
+            }
+        };
+        //左全选
+        function leftinpchange() {
+            console.log(123);
+            leftsun.forEach((item, index) => {
+                leftsun[index].status = this.checked;
+            })
+            showleftlist();
+        };
+        //右全选
+        function rightinpchange() {
+            console.log(123);
+            rightsun.forEach((item, index) => {
+                rightsun[index].status = this.checked;
+            })
+            showrightlist();
+        };
+        //左列表渲染
+        function showleftlist() {
+            var html = "";
+            leftsun.forEach((item, index) => {
+                html += ` <li><input type="checkbox"data-index="${index}" ${item.status ? "checked" : ""}/>
+                <span>${item.name}</span></li>`
+            })
+            leftul.innerHTML = html;
+        }
+        //右列表渲染
+        function showrightlist() {
+            var html = "";
+            rightsun.forEach((item, index) => {
+                html += `<li><input type="checkbox"data-index="${index}" ${item.status ? "checked" : ""}/>
+                <span>${item.name}</span></li>`
+            })
+            rightul.innerHTML = html;
+        }
+    </script>
+</body>
+
+</html>

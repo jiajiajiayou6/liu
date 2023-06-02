@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="" id="form">
+        商品名称： <input type="text" name="goods_name" />
+        库存： <input type="text" name="stock" />
+        价格： <input type="text" name="price" />
+        是否上架： <input type="text" name="status" />
+        已售： <input type="text" name="sold" />
+        图片： <input type="text" name="img" />
+        <input type="submit" value="提交" />
+    </form>
+
+    <script>
+        const form = document.getElementById('form')
+        form.addEventListener('submit', function () {
+            //阻止默认提交行为
+            event.preventDefault()
+            let obj = new FormData(this);
+            console.log(obj.getAll("goods_name"));
+            // return
+            post('https://liu.zzgoodqc.cn/goods/add', new FormData(this))
+        })
+        function post(url, data) {
+            const xhr = new XMLHttpRequest()
+            xhr.open('POST', url)
+            xhr.send(data)
+            xhr.onload = () => {
+                if (xhr.status == 200) {
+                    console.log(xhr.response)
+                } else {
+                    console.log(`${xhr.status}:${xhr.statusText}`)
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

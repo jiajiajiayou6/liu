@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    table {
+        margin-top: 30px;
+        width: 600px;
+        border-radius: 25px;
+    }
+
+    th {
+        height: 50px;
+        background-color: cadetblue;
+    }
+
+    td {
+        text-align: center;
+        height: 40px;
+    }
+
+    #submit,
+    button {
+        padding: 6px 20px;
+        background-color: darkseagreen;
+        border-radius: 8px;
+        color: aliceblue;
+
+    }
+</style>
+
+<body>
+    <form id="form" action="#">
+        <input type="text" id="username">姓名
+        <input type="text" id="age">年龄
+        <select id="sex">
+            <option value="0">未知</option>
+            <option value="1">男</option>
+            <option value="2" selected>女</option>
+        </select>性别
+        <input type="submit" value="提交" id="submit">
+    </form>
+    <table border="1" style="border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th><input type="checkbox" id="quanxuan"></th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+
+    </table>
+    <button id="piliang">批量删除</button>
+    <button id="congda">从下往上</button>
+    <button id="congxiao">从上往下</button>
+    <script>
+        const arr = [
+            {
+                id: 1,
+                username: "张三",
+                age: 15,
+                sex: 1,
+            }, {
+                id: 2,
+                username: "李四",
+                age: 26,
+                sex: 2,
+            },
+        ];
+        // 声明
+        let index;
+        const tbody = document.getElementById("tbody");
+        const form = document.getElementById("form");
+        const submit = document.getElementById("submit");
+        const username = document.getElementById("username");
+        const age = document.getElementById("age");
+        const sex = document.getElementById("sex");
+        const quanxuan = document.getElementById("quanxuan");
+        const piliang = document.getElementById("piliang");
+        const congda = document.getElementById("congda");
+        const congxiao = document.getElementById("congxiao");
+        // 自执行函数
+
+        (function () {
+            showlist();
+            submit.addEventListener("click", addsub);
+            tbody.addEventListener("click", delst);
+            quanxuan.addEventListener("click", quanxuanfun);
+            piliang.addEventListener("click", piliangfun1);
+            congda.addEventListener("click", congda1);
+            congxiao.addEventListener("click", congxiao1);
+        })();
+        //从大到小
+        function congda1() {
+            arr.sort((a, b) => b.age - a.age);
+            showlist()
+        }
+        //从小到大
+        function congxiao1() {
+            arr.sort((a, b) => a.age - b.age);
+            showlist();
+        }
+        //全选
+        function quanxuanfun() {
+            console.log(this.checked);
+            const chas = document.querySelectorAll("#tbody input[type=checkbox]");
+            chas.forEach((item) => {
+                item.checked = this.checked;
+            })
+        }
+        //批量删除
+        function piliangfun1() {
+            index = event.target.dataset.index;
+            id = event.target.dataset.id;
+            const chk = document.querySelectorAll("#tbody input[type=checkbox]:checked");
+            [...chk].forEach((item, index) => {
+                let str = item.dataset.id;
+                console.log(str);
+                kk = arr.findIndex((item, index) => {
+                    return item.id == str;
+                })
+                arr.splice(kk, 1);
+
+                showlist()
+            });
+
+        }
+        // 添加 按钮
+        function addsub() {
+            event.preventDefault();
+            if (this.value == "提交") {
+                let reg = /^(?:150|[1-9][0-9]|[0-9])$/;
+                if (!reg.test(age.value)) {
+                    alert("年龄不合法");
+                    return;
+                }
+                let data = {
+                    username: username.value,
+                    age: age.value,
+                    sex: sex.value,
+                };
+                console.log(data);
+                arr.push(data)
+            } else if (this.value == "保存") {
+                console.log(index);
+                arr[index].username = username.value;
+                arr[index].age = age.value;
+                arr[index].sex = sex.value;
+                // username.value = "";
+                // age.value = "";
+                // sex.value = 1;
+                // submit.value = "提交";
+
+            }
+            form.reset();
+            showlist();
+        };
+
+        // table点击
+        function delst() {
+            index = event.target.dataset.index;
+            console.log(event.target.dataset.index);
+            // 删除
+            if (event.target.innerHTML == "删除" && event.target.nodeName == "BUTTON") {
+                if (confirm("确定要删除吗 ?")) {
+                    arr.splice(index, 1);
+                    showlist();
+                }
+            };
+
+            // 修改回显
+            if (event.target.innerHTML == "修改" && event.target.nodeName == "BUTTON") {
+                index = event.target.dataset.index;
+                console.log(arr[index]);
+                username.value = arr[index].username;
+                age.value = arr[index].age;
+                sex.value = arr[index].sex;
+                submit.value = "保存"
+            }
+            //全选状态
+            if (event.target.nodeName == "INPUT" && event.target.type == "checkbox") {
+                const chas = document.querySelectorAll("#tbody input[type=checkbox]");
+                console.log();
+                quanxuan.checked = [...chas].every((item) => {
+                    return item.checked;
+                })
+            }
+        };
+        // 渲染
+        function showlist() {
+            let html = "";
+            arr.forEach((item, index) => {
+                html += `
+                <tr>
+                <td><input type="checkbox" data-id="${item.id}"></td>
+                <td>${item.username}</td>
+                <td>${item.age}</td>
+                <td>${item.sex == 1 ? "男" : item.sex == 2 ? "女" : "未知"}</td>
+                <td>
+                    <button data-index="${index}">删除</button>
+                    <button data-index="${index}">修改</button>
+                </td>
+            </tr>
+                `;
+            })
+            tbody.innerHTML = html;
+        }
+    </script>
+</body>
+
+</html>

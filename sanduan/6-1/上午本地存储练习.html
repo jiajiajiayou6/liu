@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上午本地存储练习</title>
+    <style>
+        button {
+            padding: 5px 20px;
+            margin-left: 18px;
+            border-radius: 5px;
+            background-image: linear-gradient(0deg, #fff1eb 0%, #ace0f9 100%);
+            border: 1px solid gray
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <button id="btn1">获取</button>
+        <button id="btn2">写入</button>
+        <button id="btn3">删除</button>
+    </div>
+    <script>
+        btn1.onclick = function fun() {
+            let obj = JSON.parse(localStorage.tianqi);
+            obj.a = 222;
+            localStorage.tianqi = JSON.stringify(obj);
+            console.log(localStorage.tianqi);
+        };
+        btn2.onclick = function fun() {
+            localStorage.tianqi = JSON.stringify({ a: 1, b: 2 })
+            console.log(localStorage.tianqi);
+        };
+        btn3.onclick = function fun() {
+            localStorage.removeItem(("tianqi"));
+        }
+    </script>
+</body>
+
+</html>

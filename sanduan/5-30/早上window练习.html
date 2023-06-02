@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="openWindow()">open</button>
+    <button onclick="myFunction()">调整</button>
+
+
+    <script>
+        var w;
+        function openWindow() {
+            w = window.open("", "", "width=200,height=100");
+            w.focus();
+        }
+        function myFunction() {
+            w.resizeTo(1000, 100);
+            w.focus();
+        }
+        console.log(window.innerHeight) //浏览器可视高度
+        console.log(window.innerWidth) //浏览器可视宽度
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下午网络请求电影篇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+
+        #box {
+            /* background-color: cadetblue; */
+            width: 100%;
+            height: 85%;
+            position: absolute;
+            top: 0px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #button {
+            width: 100%;
+            height: 10%;
+            position: absolute;
+            top: 650px;
+        }
+
+        #button div {
+            text-align: center;
+            line-height: 70px;
+        }
+
+        .as1 {
+            width: 14%;
+            height: 45%;
+            padding: 20px;
+            /* background-color: cadetblue; */
+            border-radius: 25px;
+        }
+
+        .as2 {
+            width: 100%;
+            height: 40px;
+            text-align: center;
+            line-height: 40PX;
+        }
+
+        img {
+            width: 100%;
+            height: 250px;
+            border-radius: 25PX;
+        }
+
+        button {
+            padding: 10px;
+            margin-left: 20px;
+            border-radius: 8px;
+            background-color: rgb(105, 177, 177);
+            color: aliceblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+
+    </div>
+    <div id="button">
+        <div id="pagination"></div>
+    </div>
+    <script>
+        var currentPage = 1; // 当前页码
+        var itemsPerPage = 12; // 每页显示的数据条数
+        var totalItems = 48; // 总共的数据条数
+
+        var totalPages = Math.ceil(totalItems / itemsPerPage); // 计算总页数
+
+        var pagination = document.getElementById("pagination");
+
+        // 创建页码按钮
+        for (var i = 1; i <= totalPages; i++) {
+            var button = document.createElement("button");
+            button.innerHTML = i.toString();
+            button.addEventListener("click", function () {
+                currentPage = parseInt(this.innerHTML);
+                renderPage();
+            });
+            pagination.appendChild(button);
+        }
+
+        // 渲染当前页
+        function renderPage() {
+            var startIndex = (currentPage - 1) * itemsPerPage;
+            var endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+            getshuju();
+            // TODO: 在这里根据 startIndex 和 endIndex 获取对应数据，并将其渲染到页面上
+        }
+        const box = document.getElementById("box");
+        (function () {
+            getshuju();
+        })();
+        //获取数据
+        function getshuju() {
+            const xhr = new XMLHttpRequest();
+            xhr.open("get", "https://liu.zzgoodqc.cn/movie/list?page=" + currentPage);
+            xhr.send();
+            xhr.responseType = "json";
+            xhr.onload = function () {
+                console.log(xhr.response);
+                showlist(xhr.response)
+            }
+        };
+        // //渲染数据
+        function showlist(data) {
+            console.log(data);
+            let html = "";
+            data.coming.forEach((item, index) => {
+                html += `
+                <div class="as1">
+                    <div><img src="${item.img}"></div>
+                    <div class="as2">${item.nm}</div>
+                </div>
+               
+                `;
+            });
+            box.innerHTML = html;
+        }
+
+    </script>
+</body>
+
+</html>
