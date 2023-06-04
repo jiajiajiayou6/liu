@@ -20,14 +20,14 @@
         }
 
         table {
-            width: 80%;
-            border-radius: 15px;
+            width: 95%;
             margin: auto;
             margin-top: 30px;
         }
 
         thead {
-            background-image: linear-gradient(0deg, #cfd9df 0%, #e2ebf0 100%);
+            color: white;
+            background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%);
         }
 
         tr {
@@ -44,26 +44,43 @@
         .as {
             padding: 8px 20px;
             border-radius: 10px;
+            color: white;
             border: 1px solid gray;
-            background-image: linear-gradient(0deg, #cfd9df 0%, #e2ebf0 100%);
+            background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%);
         }
+
+
 
         form {
             width: 300px;
             height: 300px;
             border-radius: 15px;
-            background-color: rgb(181, 253, 253);
+            background-image: linear-gradient(0deg, #c1dfc4 0%, #deecdd 100%);
             position: absolute;
             left: 0px;
             bottom: 0px;
             right: 0px;
             top: 0px;
             margin: auto;
-
             display: none;
             padding: 10px;
             text-align: center;
             line-height: 40px;
+            border: 1px solid gray;
+        }
+
+        #tox {
+            padding: 20px;
+            width: 80%;
+            height: 600px;
+            border-radius: 15px;
+            margin: auto;
+            margin-top: 50px;
+            background-image: linear-gradient(0deg, #c1dfc4 0%, #deecdd 100%);
+        }
+
+        #butt {
+            margin-left: 30px;
         }
     </style>
 </head>
@@ -82,9 +99,10 @@
             <input type="reset" class="as" value="取消" />
 
         </form>
-        <button id="butt">添加</button>
+
     </div>
-    <div>
+    <div id="tox">
+        <button id="butt">添加</button>
         <table border="1" style="border-collapse: collapse;">
             <thead>
                 <tr>
@@ -152,7 +170,7 @@
                 js.style.display = "inline-block";
                 quxiao.value = "取消"
             };
-            if (event.target.nodeName == "BUTTON" && event.target.innerHTML == "删除" && confirm("确认要删除吗？")) {
+            if (event.target.innerHTML == "删除" && confirm("确认要删除吗？")) {
                 const xhr = new XMLHttpRequest();
                 xhr.open("DELETE", "https://liu.zzgoodqc.cn/teas/" + id);
                 xhr.send();
@@ -161,7 +179,7 @@
                     shangpinfun();
                 };
             };
-            if (event.target.nodeName == "BUTTON" && event.target.innerHTML == "查看") {
+            if (event.target.innerHTML == "查看") {
                 form.style.display = "block";
                 h1title.innerHTML = "查看商品信息"
                 form.name.value = xing[thisindex].name
