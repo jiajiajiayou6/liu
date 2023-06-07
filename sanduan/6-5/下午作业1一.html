@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下午作业1一</title>
+    <style>
+        #xuanran {
+            width: 80%;
+            height: 400px;
+            background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%);
+            margin: auto;
+        }
+
+        input {
+            margin: auto;
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 8px 20px;
+            border-radius: 10px;
+            color: white;
+            border: 1px solid gray;
+            background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%);
+        }
+
+        .a {
+            display: block;
+            margin-left: 100px;
+            text-decoration: none;
+            color: white;
+        }
+
+        #xuanran2 {
+            position: absolute;
+            top: 600px
+        }
+
+        a {
+            display: block;
+            text-decoration: none;
+            color: rgb(107, 80, 80);
+        }
+
+        a:hover {
+            color: orange;
+        }
+
+        .a:hover {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 搜集一主播的信息显示在页面上。可以直接跳转到该直播间 -->
+    <div id="xuanran">
+        <input type="text" id="sou" />
+        <input type="text" id="b" />
+        <button id="suo">搜索</button>
+        <div id="xuanran1"></div>
+
+    </div>
+    <div id="xuanran2">
+        <a href="下午作业1一.html">搜集一主播的信息显示在页面上。可以直接跳转到该直播间 </a>
+        <a href="下午作业2二.html">敏感词检测 </a>
+        <a href="下午作业3三.html">手机号归属地 </a>
+        <a href="下午作业4四.html">每日一言 </a>
+        <a href="下午作业4四2天气.html">天气预报 </a>
+    </div>
+    <script>
+        const xuanran1 = document.getElementById("xuanran1");
+        const suo = document.getElementById("suo");
+        const sou = document.getElementById("sou");
+        const b = document.getElementById("b");
+        window.onload = function () {
+            suo.addEventListener("click", suoFun)
+        };
+        //获取数据
+        function suoFun() {
+            console.log(12);
+            const ajax = new XMLHttpRequest();
+            let b1 = b.value
+            let sou1 = sou.value
+            console.log(sou1);
+            ajax.open("get", `https://v.api.aa1.cn/api/api-douyu/index.php?msg=${sou1}&b=${b1}`);
+            ajax.send();
+            ajax.responseType = "伪json";
+            ajax.onload = function () {
+                xing = ajax.response
+                let prea = xing.replace(/<pre.+?>/gi, "").replace(/<\/pre>/gi, "");
+                prea = prea.replace(/,\s*\}/gi, "}");
+                prea = prea.replace(/'/g, '"');
+                console.log(JSON.parse(prea));
+                xing1 = JSON.parse(prea)
+                console.log(xing1);
+                xuanranFun(xing1);
+            };
+        };
+        //渲染
+        function xuanranFun() {
+            let html = "";
+            console.log(xing1.tu);
+            html += `
+            <a href="${xing1.zblj}"><img src="${xing1.tu}"></a>
+            <a href="${xing1.zblj}" class="a">${xing1.zbj}直播间链接</a>
+            `
+                ;
+            xuanran1.innerHTML = html;
+        };
+    </script>
+</body>
+
+</html>

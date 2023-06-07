@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上午this指向练习</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script>
+        // call()
+        // const person = {
+        //     name: "John",
+        //     age: 30,
+        //     introduce(city1, suibian) {
+        //         console.log(
+        //             `My name is ${this.name}, I'm ${this.age} years old and I live in ${city1}.`
+        //         );
+        //     },
+        // };
+        // person.introduce("Zheng zhou");//city城市名 //直接触发，并log
+        // // 输出：My name is John, I'm 30 years old and I live in New York.
+        // const otherPerson = { name: "阿里斯", age: 39 };
+        // person.introduce.call(otherPerson, "Shanghai", "阿九恐龙时代");
+        // // 输出：My name is Alice, I'm 25 years old and I live in London.
+
+
+
+        // apply()
+        // let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        // console.log(Math.max.apply(null, arr)); // 输出：5//null为this指向
+        // const array1 = ["a", "b"]; const array2 = ["c", "d", "e"];
+        // Array.prototype.push.apply(array1, array2); console.log(array1);
+        // function greet() {
+        //     console.log(`Hello, ${this.name}!`);
+        // }
+        // const person = { name: "John" };
+        // greet.apply(person, null); // 输出：Hello, John!
+        //            //this
+
+
+
+        // call()
+        const person = {
+            name: "John",
+            age: 30,
+            introduce(city) {
+                console.log(
+                    `My name is ${this.name}, I'm ${this.age} years old and I live in ${city}.`
+                );
+            },
+        };
+        const otherPerson = { name: "Alice", age: 25 };
+        const introduce = person.introduce.bind(otherPerson, "London");
+        introduce();
+         // 输出：My name is Alice, I'm 25 years old and I live in London.
+    </script>
+</body>
+
+</html>

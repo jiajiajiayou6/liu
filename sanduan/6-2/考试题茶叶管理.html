@@ -82,6 +82,27 @@
         #butt {
             margin-left: 30px;
         }
+
+        button:active {
+            color: aquamarine;
+            background-color: #ffdb3a;
+        }
+
+        .js:active {
+            color: aquamarine;
+            background-color: #ffdb3a;
+        }
+
+        .as:active {
+            color: aquamarine;
+            background-color: #ffdb3a;
+        }
+
+        .bb {
+            padding: 8px;
+            border-radius: 6px;
+            margin-left: 40.5%;
+        }
     </style>
 </head>
 
@@ -94,7 +115,6 @@
             茶叶价格：<input type="text" name="price" /><br />
             茶叶库存：<input type="text" name="stock" /><br />
             茶叶描述：<input type="text" name="description" /><br />
-
             <input type="submit" class="js" value="提交" />
             <input type="reset" class="as" value="取消" />
 
@@ -103,9 +123,15 @@
     </div>
     <div id="tox">
         <button id="butt">添加</button>
+        <button id="piliangshanchu">批量删除</button>
+        <button id="qingkongliebiao" onclick="qingkongliebiaofun()">清空列表</button>
+        <button id="shuaxin">刷新页面</button>
+        <input type="text" class="bb" id="wd" placeholder="搜索">
+        <button id="searchCar">搜索</button>
         <table border="1" style="border-collapse: collapse;">
             <thead>
                 <tr>
+                    <th><input type="checkbox" onclick="quanxuanfun()" /></th>
                     <th>ID</th>
                     <th>茶叶名称</th>
                     <th>茶叶类型</th>
@@ -128,6 +154,8 @@
         const h1title = document.querySelector("h1")
         const quxiao = document.querySelector(".as");
         const js = document.querySelector(".js");
+        const searchCar = document.getElementById("searchCar");
+        const shuaxin = document.getElementById("shuaxin");
         const carsare = document.getElementsByName("carsare")[0]
         let xing = [], thisindex;
         window.onload = function () {
@@ -135,12 +163,17 @@
             butt.addEventListener("click", anniutianjia);
             xuanran.addEventListener("click", shijianFun);
             form.addEventListener("submit", tijiaoshujuFun);
+            shuaxin.addEventListener("click", shuaxinFun);
             //渲染
             shangpinfun();
         };
         //取消
         function quxiaoFun() {
             form.style.display = "none";
+        };
+        //刷新页面
+        function shuaxinFun() {
+
         };
         //添加
         function anniutianjia() {
@@ -157,7 +190,8 @@
             let id = event.target.dataset.id;
             console.log(id);
             thisindex = xing.findIndex((item) => { return item.id == id })
-            console.log(xing[thisindex]);
+            // console.log(xing[thisindex]);
+            // console.log(xing[thisindex].stock);
             if (event.target.innerHTML == "修改") {
                 h1title.innerHTML = "修改商品信息"
                 form.style.display = " block"
@@ -171,11 +205,11 @@
                 quxiao.value = "取消"
             };
             if (event.target.innerHTML == "删除" && confirm("确认要删除吗？")) {
-                const xhr = new XMLHttpRequest();
-                xhr.open("DELETE", "https://liu.zzgoodqc.cn/teas/" + id);
-                xhr.send();
-                xhr.responseType = "json";
-                xhr.onload = function () {
+                const ajax = new XMLHttpRequest();
+                ajax.open("DELETE", "https://liu.zzgoodqc.cn/teas/" + id);
+                ajax.send();
+                ajax.responseType = "json";
+                ajax.onload = function () {
                     shangpinfun();
                 };
             };
@@ -191,17 +225,23 @@
                 js.style.display = "none";
                 quxiao.value = "退出查看"
             };
+            if (event.target.nodeName == "INPUT") {
+                console.log("选中");
+                console.log(thisindex);
+                console.log(event.target.nodeName);
+                xing[thisindex] = this.checked
+            }
         };
         //form添加或修改
         function tijiaoshujuFun() {
             event.preventDefault();
             let data = new FormData(this);
             if (h1title.innerHTML == "添加商品") {
-                const xhr = new XMLHttpRequest();
-                xhr.open("post", "https://liu.zzgoodqc.cn/teas");
-                xhr.send(data);
-                xhr.responseType = "json";
-                xhr.onload = function () {
+                const ajax = new XMLHttpRequest();
+                ajax.open("post", "https://liu.zzgoodqc.cn/teas");
+                ajax.send(data);
+                ajax.responseType = "json";
+                ajax.onload = function () {
                     shangpinfun()
                 };
             };
@@ -212,55 +252,107 @@
                     type: data.get("type"),
                     price: data.get("price"),
                     stock: data.get("stock"),
+                    status: data.get("status"),
                     description: data.get("description"),
                 };
-                console.log(xing);
+                console.log(obj);
                 console.log(xing[thisindex].id);
                 id = xing[thisindex].id;
-                // const xhr = new XMLHttpRequest();
-                // xhr.open("put", "https://liu.zzgoodqc.cn/teas/{id}");
-                // xhr.send();
-                // xhr.responseType = "json";
-                // xhr.onload = function () {
-                //     console.log(xing[thisindex].id);
-                //     shangpinfun();
-                // };
-                fetch("https://liu.zzgoodqc.cn/teas/" + id, {
-                    method: "put",
-                    headers: { "Content-type": "application/json" },
-                    body: JSON.stringify(obj)
-                })
-                    .then((response) => {
-                        return response.json()
-                    })
-                    .then((res) => {
-                        console.log(res);
-                        shangpinfun()
-                    })
+                data[thisindex] = obj
+                const ajax = new XMLHttpRequest();
+                ajax.open("PUT", "https://liu.zzgoodqc.cn/teas/" + id);
+                ajax.setRequestHeader("Content-Type", "application/json");
+                ajax.responseType = "json";
+                ajax.send();
+                ajax.onload = function () {
+                    console.log(xing[thisindex].id);
+                    shangpinfun();
+                };
+                // fetch("https://liu.zzgoodqc.cn/teas/" + id, {
+                //     method: "put",
+                //     headers: { "Content-type": "application/json" },
+                //     body: JSON.stringify(obj)
+                // })；
+                //     .then((response) => {
+                //         return response.json()
+                //     })；
+                //     .then((res) => {
+                //         console.log(res);
+                //         shangpinfun()
+                //     })；
             }
         };
+        //全选
+        function quanxuanfun() {
+            let id = event.target.dataset.id;
+            console.log(id);
+            thisindex = xing.findIndex((item) => { return item.id == id })
+            console.log(123);
+            xing.forEach((item, index) => {
+                console.log(xing[thisindex]);
+                xing[thisindex] = this.checked;
+            })
+            xunranfun();
+        };
+        //清空列表
+        function qingkongliebiaofun() {
+            xing = [];
+            xunranfun()
+        };
 
+        //批量删除
+        function piliangshanchu() {
+            const checkboxes = document.querySelectorAll('#myTable tbody input[type="checkbox"]:checked');
+            const ids = [];
+            checkboxes.forEach(checkbox => {
+                const row = checkbox.parentNode.parentNode;
+                const id = row.dataset.id; // 假设每行数据都有一个唯一的 id 属性
+                ids.push(id);
+            });
+            const ajax = new XMLHttpRequest();
+            ajax.open("DELETE", "https://liu.zzgoodqc.cn/teas/" + id);
+            ajax.setRequestHeader("Content-Type", "application/json");
+            ajax.responseType = "json";
+            const body = JSON.stringify({ ids: ids });
+            ajax.send();
+            ajax.onload = function () {
+                checkboxes.forEach(checkbox => {
+                    const row = checkbox.parentNode.parentNode;
+                    row.remove();
+                })
+            };
+
+        };
         //更新列表
         function shangpinfun() {
             console.log(12);
-            const xhr = new XMLHttpRequest();
-            xhr.open("get", "https://liu.zzgoodqc.cn/teas");
-            xhr.send();
-            xhr.responseType = "json";
-            xhr.onload = function () {
-                xing = xhr.response.data
+            const ajax = new XMLHttpRequest();
+            ajax.open("get", "https://liu.zzgoodqc.cn/teas");
+            ajax.send();
+            ajax.responseType = "json";
+            ajax.onload = function () {
+                xing = ajax.response.data
                 xunranfun();
             };
             form.style.display = " none";
         };
-
+        //搜索
+        searchCar.addEventListener("click", searchFun);
+        function searchFun() {
+            let searchRes = xing.filter((item) => {
+                return item.name.includes(wd.value);
+            });
+            xing = searchRes;
+            xunranfun(xing);
+        }
         //渲染列表 
         function xunranfun() {
             let html = "";
             console.log(xing);
             xing.forEach((item, index) => {
                 html += `
-            <tr>
+         <tr>
+            <th><input type="checkbox"data-id="${item.id}"/></th>
             <th>${item.id}</th>
             <td>${item.name}</td>
             <td>${item.type}</td>
@@ -287,6 +379,9 @@
             let day = date1.getDate();
             let hour = date1.getHours();
             let minute = date1.getMinutes();
+            if (minute < 10) {
+                minute = "0" + minute;
+            }
             let second = date1.getSeconds();
             return `${year}-${month}-${day}- ${hour}:${minute}:${second}`;
         };

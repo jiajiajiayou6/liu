@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上午封装函数练习</title>
+</head>
+
+<body>
+    <script>
+        //    sort()的封装函数 数组排序
+        // function mySort(arr, compareFn) {
+        //     if (!compareFn) {
+        //         compareFn = function (x, y) {
+        //             return x - y;
+        //         };
+        //     }
+        //     for (let i = 0; i < arr.length - 1; i++) {
+        //         for (let j = i + 1; j < arr.length; j++) {
+        //             if (compareFn(arr[i], arr[j]) > 0) {
+        //                 [arr[i], arr[j]] = [arr[j], arr[i]];
+        //             }
+        //         }
+        //     }
+        //     return arr;
+        // }
+        // const arr = [7, 9, 8, 10];
+        // const result = mySort(arr, function (x, y) {
+        //     return y - x; // 降序排列
+        // });
+        // console.log(result); // [3, 2, 1]
+
+        //    every()的封装函数 检测数值元素的每个元素是否都符合条件。只要有一个不符合就返回false 返回true/false
+        // var str = [1, 2, 3];
+        // function myEvery(fun) {
+        //     for (var i = 0; i < str.length; i++) {
+        //         var eve = fun(str[i], i, str);
+        //         if (!eve) {
+        //             return false;
+        //         }
+        //     }
+        //     return true;
+        // }
+        // var cc = myEvery(function (item) {
+        //     return item > 0;
+        // });
+        // console.log(cc);
+
+        //    filter()的封装函数 检测数值元素，并返回符合条件所有元素的数组。
+        // function myFilter(arr, callback, thisArg) {
+        //     const result = [];
+        //     for (let i = 0; i < arr.length; i++) {
+        //         if (callback.call(thisArg, arr[i], i, arr)) {
+        //             result.push(arr[i]);
+        //         }
+        //     }
+        //     return result;
+        // }
+        // const arr = [1, 2, 3, 4, 5];
+        // const result = myFilter(
+        //     arr, item =>
+        //     item > 2
+        // );
+        // console.log(result); // 输出 [3, 4, 5]
+
+        //    find()的封装函数  返回符合传入测试（函数）条件的数组元素。
+        // function myFind(arr1, callback, thisArg) {
+        //     const result1 = [];
+        //     for (let i = 0; i < arr1.length; i++) {
+        //         if (callback.call(thisArg, arr1[i], i, arr1)) {
+        //             result1.push(arr1[i]);
+        //             return result1
+        //         }
+        //     }
+        //     return result1;
+        // };
+        // const arr1 = [1, 2, 3, 4, 5];
+        // const result1 = myFind(
+        //     arr1, item =>
+        //     item > 3
+        // );
+        // console.log(result1);
+
+        //    findIndex()的封装函数  返回符合传入测试（函数）条件的数组元素索引。
+        // function myFindIndex(arr1, callback, thisArg) {
+        //     const result1 = [];
+        //     for (let i = 0; i < arr1.length; i++) {
+        //         if (callback.call(thisArg, arr1[i], i, arr1)) {
+        //             result1.push(arr1[i]);
+        //             return i
+        //         }
+        //     }
+        //     return result1;
+        // };
+        // const arr1 = [1, 2, 3, 4, 5];
+        // const result1 = myFindIndex(
+        //     arr1, item =>
+        //     item > 3
+        // );
+        // console.log(result1); //输出4的下标3
+
+        //    findLast()的封装函数  返回数组中满足提供的测试函数条件的最后一个元素的值
+        // 方法一
+        // function myFindLast(arr1, callback, thisArg) {
+        //     const result1 = [];
+        //     for (let i = arr1.length - 1; i >= 0; i--) {
+        //         if (callback.call(thisArg, arr1[i], i, arr1)) {
+        //             result1.unshift(arr1[i]);
+        //             return result1
+        //         };
+        //     };
+        //     return result1;
+        // };
+        // const arr1 = [1, 2, 3, 4, 5];
+        // const result1 = myFindLast(arr1, item => item > 3);
+        // console.log(result1); //输出5
+        // 方法二
+        // function myFindLast(arr, callback) {
+        //     for (let i = arr.length - 1; i >= 0; i--) {
+        //         if (callback(arr[i], i, arr)) {
+        //             return arr[i];
+        //         }
+        //     }
+        //     return undefined;
+        // }
+        // const arr = [1, 2, 3, 4, 5, 4];
+        // const result = myFindLast(arr, function (item) {
+        //     return item === 4;
+        // });
+        // console.log(result); // 4
+
+        //    findLastIndex()的封装函数  方法返回数组中满足提供的测试函数条件的最后一个元素的索引
+        // function myFindLast(arr1, callback, thisArg) {
+        //     const result1 = [];
+        //     for (let i = arr1.length - 1; i >= 0; i--) {
+        //         if (callback.call(thisArg, arr1[i], i, arr1)) {
+        //             result1.unshift(arr1[i]);
+        //             return i
+        //         };
+        //     };
+        //     return result1;
+        // };
+        // const arr1 = [1, 2, 3, 4, 5];
+        // const result1 = myFindLast(arr1, item => item > 3);
+        // console.log(result1); //输出5下标4
+
+        //    forEach()的封装函数 	数组每个元素都执行一次回调函数。
+        // let ast = [1, 2, 3, 4, 5, 6]
+        // Array.prototype.forEach = function () {
+        //     for (var i = 0; i < this.length; i++) {
+        //         console.log();
+        //     }
+        // };
+
+        //    from()的封装函数 通过给定的对象中创建一个数组。
+        // function myFrom(arg, mapFn, thisArg) {
+        //     const result = [];
+        //     if (typeof arg[Symbol.iterator] !== "function") {
+        //         console.log("null");
+        //     }
+        //     let i = 0;
+        //     for (const item of arg) {
+        //         result.push(mapFn ? mapFn.call(thisArg, item, i++) : item);
+        //     }
+        //     return result;
+        // }
+        // const str = "Hello World";
+        // const arr = myFrom(str);
+        // console.log(arr); // ['H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd']
+
+        //    map()的封装函数	通过指定函数处理数组的每个元素，并返回处理后的数组。
+        // function myMap(callback, arr) {
+        //     const result = [];
+        //     for (let i = 0; i < arr.length; i++) {
+        //         result.push(callback(arr[i], i, arr));
+        //     }
+        //     return result;
+        // }
+        // const arr = [5, 3, 2];
+        // const newArr = myMap(function (item) {
+        //     return item * 2;
+        // }, arr);
+        // console.log(newArr); // [10, 6, 4]
+
+        //    reduce()的封装函数	将数组元素计算为一个值（从左到右）。reduceRight()从右到左
+        function myReduce(arr, func, initialValue) {
+            var accumulator = initialValue !== undefined ? initialValue : arr[0];
+
+            for (var i = initialValue !== undefined ? 0 : 1; i < arr.length; i++) {
+                accumulator = func(accumulator, arr[i], i, arr);
+            }
+
+            return accumulator;
+        }
+        const arr = [5, 3, 2];
+        const newArr = myReduce(arr, function (accumulator, item) {
+            return accumulator + item;
+        });
+
+        console.log(newArr);//输出10
+
+    </script>
+</body>
+
+</html>

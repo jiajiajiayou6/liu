@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下午作业2二</title>
+    <style>
+        #xuanran2 {
+            position: absolute;
+            top: 600px
+        }
+
+        a {
+            display: block;
+            text-decoration: none;
+            color: rgb(107, 80, 80);
+        }
+
+        a:hover {
+            color: orange;
+        }
+        input {
+            margin: auto;
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 8px 20px;
+            border-radius: 10px;
+            color: white;
+            border: 1px solid gray;
+            background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 敏感词检测 -->
+    <div id="xuanran">
+        <input type="text" id="sou" />
+        <button id="suo" onclick="sousuoFun()">敏感词检测</button>
+        <div id="xuanran1"></div>
+    </div>
+    <div id="xuanran2">
+        <a href="下午作业1一.html">搜集一主播的信息显示在页面上。可以直接跳转到该直播间 </a>
+        <a href="下午作业2二.html">敏感词检测 </a>
+        <a href="下午作业3三.html">手机号归属地 </a>
+        <a href="下午作业4四.html">每日一言 </a>
+        <a href="下午作业4四2天气.html">天气预报 </a>
+    </div>
+    <script>
+        const sou = document.getElementById("sou");
+        const xuanran1 = document.getElementById("xuanran1");
+        function sousuoFun() {
+            const ajax = new XMLHttpRequest();
+            let sou1 = sou.value
+            console.log(sou1);
+            ajax.open("get", `https://v.api.aa1.cn/api/api-mgc/index.php?msg=${sou1}`);
+            ajax.send();
+            ajax.responseType = "json";
+            ajax.onload = function () {
+                xing = ajax.response
+                console.log(xing);
+                if (xing.desc == "暂无敏感词") {
+                    xing.ci = "";
+                }
+                xuanranFun(xing);
+            };
+        };
+        function xuanranFun() {
+            let html = "";
+            html += `
+            <p>${xing.desc} ${xing.ci}</p>
+            `;
+            xuanran1.innerHTML = html;
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下午2商品增删改分页等</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 90%;
+            height: 700px;
+            background-color: aquamarine;
+            margin: auto;
+        }
+
+        #top {
+            width: 100%;
+            height: 120px;
+            background-color: aliceblue;
+        }
+
+        #content {
+            width: 100%;
+            height: 580px;
+            background-color: rgb(174, 185, 195);
+        }
+
+        #box1 {
+            width: 100%;
+            height: 560px;
+            background-color: #b8d4cf;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        thead tr {
+            width: 100%;
+            height: 50px;
+            color: white;
+            background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%);
+        }
+
+        a {
+            text-decoration: none;
+            color: rgb(107, 80, 80);
+            margin-right: 50px;
+        }
+
+        a:hover {
+            color: orange;
+        }
+
+        td {
+            height: 50px;
+            text-align: center;
+            margin: auto;
+        }
+
+        img {
+            width: 80px;
+            height: 40px;
+        }
+
+        input {
+            margin: auto;
+            padding: 8px 20px;
+            border-radius: 6px;
+        }
+
+        button,
+        .js,
+        .as {
+            padding: 8px 20px;
+            border-radius: 10px;
+            color: white;
+            border: 1px solid gray;
+            background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%);
+        }
+
+        form {
+            width: 350px;
+            height: 380px;
+            border-radius: 15px;
+            background-image: linear-gradient(0deg, #c1dfc4 0%, #deecdd 100%);
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            right: 0px;
+            top: 0px;
+            margin: auto;
+            display: none;
+            padding: 10px;
+            text-align: center;
+            line-height: 45px;
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div class="ban">
+            <form action="#" name="carsare" id="form">
+                <h1 style="text-align: center; color: white">添加</h1>
+                商品名称：<input type="text" name="goods_name" /><br />
+                商品价格：<input type="text" name="price" /><br />
+                商品库存：<input type="text" name="stock" /><br />
+                商品已售：<input type="text" name="sold" /><br />
+                商品图片：<input type="text" name="img" /><br />
+                商品状态：<input type="text" name="status" /><br />
+                <input type="submit" class="js" value="提交" />
+                <input type="reset" class="as" value="取消" />
+            </form>
+        </div>
+        <div id="top">
+            <button id="butt">添加</button>
+            <input type="text" id="sousuo" class="sousuo">
+            <button onclick="sousuoFun()">搜索</button>
+            <button onclick="shanggao()">⬆</button>
+            <button onclick="xiagao()">⬇</button>
+        </div>
+        <div id="content">
+            <div id="box1">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>商品名称</th>
+                            <th>价格</th>
+                            <th>库存</th>
+                            <th>已售</th>
+                            <th>图片</th>
+                            <th>状态</th>
+                            <th>时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+            <a href="#" id="prov">上一页</a>
+            <a href="#" id="next">下一页</a>
+        </div>
+    </div>
+    <script>
+        const tbody = document.getElementById("tbody");
+        const butt = document.getElementById("butt");
+        const quxiao = document.querySelector(".as");
+        const h1title = document.querySelector("h1");
+        const js = document.querySelector(".js");
+        const form = document.getElementById("form");
+        const carsare = document.getElementsByName("carsare")[0]
+        let updateId, thisindex;
+        let data;
+        //分页
+        let page = 1;
+        window.onload = function () {
+            document.getElementById("prov").addEventListener("click", function () {
+                if (page == 1) return;
+                page--;
+                console.log(123);
+                huoqushuju(page)
+                // shanggao(page)
+                // xiagao(page)
+            });
+            document.getElementById("next").addEventListener("click", function () {
+                if (page == 6) return;
+                page++;
+                console.log(123);
+                huoqushuju(page)
+                // shanggao(page)
+                // xiagao(page)
+            });
+            huoqushuju()
+            butt.addEventListener("click", anniutianjia);
+            quxiao.addEventListener("click", quxiaoFun);
+            form.addEventListener("submit", tijiaoshujuFun);
+            tbody.addEventListener("click", tableFun);
+        };
+        //form添加或修改
+        function tijiaoshujuFun() {
+            event.preventDefault();
+            let data = new FormData(this);
+            if (h1title.innerHTML == "添加商品") {
+                const ajax = new XMLHttpRequest();
+                ajax.open("post", "https://liu.zzgoodqc.cn/goods/add");
+                ajax.send(data);
+                ajax.responseType = "json";
+                ajax.onload = function () {
+                    huoqushuju()
+                };
+            };
+            if (h1title.innerHTML == "修改商品") {
+                console.log(data.get("goods_name"));
+                let obj = {
+                    id: updateId,
+                    goods_name: data.get("goods_name"),
+                    price: data.get("price"),
+                    stock: data.get("stock"),
+                    sold: data.get("sold"),
+                    img: data.get("img"),
+                    status: data.get("status"),
+                };
+                console.log(obj);
+                data[thisindex] = obj;
+                fetch("https://liu.zzgoodqc.cn/goods/update", {
+                    method: "post",
+                    headers: { "Content-type": "application/json" },
+                    body: JSON.stringify(obj)
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        console.log(data);
+                        huoqushuju()
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+                form.style.display = " none";
+            };
+
+        }
+        //上高
+        function shanggao(page = 1) {
+            const ajax = new XMLHttpRequest();
+            ajax.open("get", `https://liu.zzgoodqc.cn/goods/sort?sort=desc&type=stock&page=${page}&limit=10`);
+            ajax.send(data);
+            ajax.responseType = "json";
+            ajax.onload = function () {
+                console.log(data);
+                data = data.sort((a, b) => {
+                    return b.stock - a.stock;
+                });
+                console.log(data);
+                xuanranyemian(data)
+            };
+        };
+        //下高
+        function xiagao(page = 1) {
+            const ajax = new XMLHttpRequest();
+            ajax.open("get", `https://liu.zzgoodqc.cn/goods/sort?sort=asc&type=stock&page=${page}&limit=10`);
+            ajax.send(data);
+            ajax.responseType = "json";
+            ajax.onload = function () {
+                console.log(data);
+                data = data.sort((a, b) => {
+                    return a.stock - b.stock;
+                });
+                console.log(data);
+                xuanranyemian(data)
+            };
+            console.log(11);
+        };
+        //搜索
+        function sousuoFun() {
+            console.log(sousuo.value);
+            const ajax = new XMLHttpRequest();
+            ajax.open("post", "https://liu.zzgoodqc.cn/goods/search");
+
+            ajax.send(data);
+
+            ajax.responseType = "json";
+            ajax.onload = function () {
+                console.log(data);
+                data1 = data.filter((item, idex) => {
+                    // if (item.goods_name.includes(sousuo.value)) {
+                    //     console.log(item);
+                    //     return item
+                    // }
+                    return item.goods_name.includes(sousuo.value)
+                });
+                console.log(data1);
+                // data1 = data.goods_name.includes(sousuo.value)
+                // // console.log(ajax.response.data);
+                // // data = data.includes();
+                // console.log(data[2].goods_name);
+                sousuoxuanran(data1)
+            };
+        };
+        //搜索渲染
+        function sousuoxuanran(data1) {
+            let html = "";
+            console.log(data1);
+            data1.forEach((item, index) => {
+                html += `
+                <tr>
+                   <td>${item.id}</td>    
+                   <td>${item.goods_name}</td>    
+                   <td>${item.price}</td>    
+                   <td>${item.stock}</td>    
+                   <td>${item.sold}</td>    
+                   <td><a href="${item.img}"><img src="${item.img}"/></a></td>
+                   <td>${item.status}</td>    
+                   <td>${getduta(item.created_at)}</td>    
+                   <td>
+                       <button data-id="${item.id}">删除</button>
+                       <button data-id="${item.id}">修改</button>
+                       <button data-id="${item.id}">查看</button>
+                   </td>    
+                </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        };
+        //取消
+        function quxiaoFun() {
+            form.style.display = "none";
+        };
+        //添加
+        function anniutianjia() {
+            h1title.innerHTML = "添加商品"
+            js.style.display = "inline-block";
+            quxiao.value = "取消"
+            form.style.display = " block";
+            form.reset()
+        };
+        function tableFun() {
+            event.preventDefault();
+            id = event.target.dataset.id;
+            updateId = id;
+            console.log(updateId);
+            thisindex = data.findIndex((item) => { return item.id == id })
+            if (event.target.innerHTML == "删除" && confirm("确认要删除吗？")) {
+                const ajax = new XMLHttpRequest();
+                ajax.open("get", "https://liu.zzgoodqc.cn/goods/delete?id=" + id);
+                ajax.send(data);
+                ajax.responseType = "json";
+                ajax.onload = function () {
+                    huoqushuju();
+                };
+            };
+
+            if (event.target.innerHTML == "修改") {
+                h1title.innerHTML = "修改商品"
+                form.style.display = " block"
+                form.goods_name.value = data[thisindex].goods_name
+                form.price.value = data[thisindex].price
+                form.stock.value = data[thisindex].stock
+                console.log(form.price.value);
+                form.sold.value = data[thisindex].sold
+                form.img.value = data[thisindex].img
+                form.status.value = data[thisindex].status
+                js.style.display = "inline-block";
+                quxiao.value = "取消"
+            };
+
+            if (event.target.innerHTML == "查看") {
+                h1title.innerHTML = "查看商品"
+                form.style.display = " block"
+                form.goods_name.value = data[thisindex].goods_name
+                form.price.value = data[thisindex].price
+                form.stock.value = data[thisindex].stock
+                form.sold.value = data[thisindex].sold
+                form.img.value = data[thisindex].img
+                form.status.value = data[thisindex].status
+                js.style.display = "inline-block";
+                quxiao.value = "取消"
+                js.style.display = "inline-block";
+            }
+
+        };
+        //获取数据
+        function huoqushuju(page = 1) {
+            fetch(`https://liu.zzgoodqc.cn/goods/listByPage?page=${page}&limit=10`)
+                .then((res) => res.json())
+                .then((result) => {
+                    console.log(result);
+                    console.log(result.data);
+                    data = result.data
+                    xuanranyemian(data)
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            form.style.display = " none";
+        };
+        //渲染
+        function xuanranyemian(data) {
+            let html = "";
+            console.log(data);
+            data.forEach((item, index) => {
+                html += `
+                <tr>
+                   <td>${item.id}</td>    
+                   <td>${item.goods_name}</td>    
+                   <td>${item.price}</td>    
+                   <td>${item.stock}</td>    
+                   <td>${item.sold}</td>    
+                   <td><a href="${item.img}"><img src="${item.img}"/></a></td>
+                   <td>${item.status}</td>    
+                   <td>${getduta(item.created_at)}</td>    
+                   <td>
+                       <button data-id="${item.id}">删除</button>
+                       <button data-id="${item.id}">修改</button>
+                       <button data-id="${item.id}">查看</button>
+                   </td>    
+                </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        };
+        //修改时间样式
+        function getduta(date) {
+            let date1 = new Date(date);
+            let year = date1.getFullYear();
+            let month = date1.getMonth() + 1;
+            let day = date1.getDate();
+            let hour = date1.getHours();
+            let minute = date1.getMinutes();
+            if (minute < 10) {
+                minute = "0" + minute;
+            }
+            let second = date1.getSeconds();
+            return `${year}-${month}-${day}  ${hour}:${minute}:${second}`;
+        };
+    </script>
+</body>
+
+</html>

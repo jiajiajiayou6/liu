@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下午面试题练习</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <script>
+        // 1、以下代码输出的结果是：
+        // var foo = function bar() { }
+        // console.log(typeof bar); //undefined
+        // function bar() { }
+        // console.log(typeof bar); //function
+
+        // 2、以下代码输出结果是：
+        // var a = 1;
+        // if (true) {
+        //     console.log(a); //报错
+        //     let a = 2;
+        // }
+
+        // 3、以下代码输出的结果是：
+        // var a = [1, 2, 3, 3, 5, 6, 6, 6, 'A', undefined, true, null]
+        // var s = new Set(a);
+        // console.log(s.size); // 9个
+
+        // 4、请你写出代码，计算两个数组的交集：
+        let arr1 = [1, 2, 3, 4, 5];
+        let arr2 = [4, 5, 6, 7, 8];
+        let arr3 = arr1.filter((item, index) => {
+            return arr1.includes(arr2.item)
+        });
+    </script>
+</body>
+
+</html>
