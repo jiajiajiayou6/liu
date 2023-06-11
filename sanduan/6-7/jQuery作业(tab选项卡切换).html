@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="./jquery-3.7.0.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: aliceblue;
+    }
+
+    .div1 {
+      width: 100%;
+      height: 200px;
+      background-color: #66677c;
+    }
+
+    h1 {
+      position: relative;
+      top: 50px;
+      text-align: center;
+      color: rgb(213, 214, 226);
+    }
+
+    h2 {
+      position: relative;
+      top: 50px;
+      text-align: center;
+      color: rgb(213, 214, 226);
+    }
+
+    .box {
+      margin: auto;
+      margin-top: 30px;
+      width: 500px;
+      height: 300px;
+      border-radius: 10px;
+      background-image: linear-gradient(-225deg,
+          #7085b6 0%,
+          #87a7d9 50%,
+          #def3f8 100%);
+    }
+
+    ul {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      background-color: #87a7d9;
+      list-style: none;
+    }
+
+    ul li {
+      text-align: center;
+      width: 100px;
+      float: left;
+    }
+
+    img {
+      margin-left: 10px;
+      width: 300px;
+      height: 260px;
+      float: left;
+    }
+
+    p {
+      line-height: 30px;
+    }
+
+    #ccc {
+      display: none;
+    }
+
+    #ppp {
+      display: none;
+    }
+
+    #qqq {
+      display: none;
+    }
+
+    #hhh {
+      display: none;
+    }
+
+    #kkk {
+      display: none;
+    }
+
+    body {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="div1">
+    <h1>Tabs选项卡</h1>
+  </div>
+  <div class="box">
+    <ul>
+      <li style="color: #def3f8" id="li1">人物</li>
+      <li style="color: #66677c" id="li2">名称</li>
+      <li style="color: #fb8b05" id="li3">时间</li>
+      <li style="color: #2b73af" id="li4">地点</li>
+      <li style="color: #229453" id="li5">代步工具</li>
+    </ul>
+    <h2>hello!!!大家好</h2>
+    <div id="ccc">
+      <img src="https://img0.baidu.com/it/u=1880828291,572826400&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=500" />
+      <p>山外青山楼外楼，唱跳rap打篮球。梳中分，背带裤。我是ikun你记住。</p>
+    </div>
+    <div id="ppp">
+      <h3>
+        2012年8月，蔡徐坤参演的偶像剧《童话二分之一》播出，由此开始步入大众视线
+        [2]
+        。2018年1月，参加竞演类综艺节目《偶像练习生》并以总票数第一正式出道，成为限定男团NINE
+        PERCENT队长 [3] ；8月，发行首张EP《1》 [4]
+        ，获2018亚洲新歌榜年度盛典最受欢迎潜力男歌手奖 [5]
+      </h3>
+    </div>
+    <div id="qqq">
+      <h3>
+        蔡徐坤（KUN），1998年8月2日出生于浙江省温州市，户籍湖南吉首 [139]
+        ，中国内地男歌手、演员、原创音乐制作人 [1] 、MV导演 [107]
+      </h3>
+    </div>
+    <div id="hhh">
+      <img
+        src="https://img1.baidu.com/it/u=2558059328,3361314584&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1686330000&t=158af0a4516147b9316aa2ac10867f89"
+        alt="" />
+      <h5>
+        :三层欧式豪华别墅设计方案,外观看起来恢弘大气,超大的落地窗,占地面积:13.44m*15.72m(尺寸含门廊),一层168建筑平方米,总计424建筑平方米,建筑层高:三层。
+      </h5>
+    </div>
+    <div id="kkk">
+      <img
+        src="https://img2.baidu.com/it/u=3688950879,3961945259&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1686330000&t=b1f62bd0ff0a988bab81b4e08d9f0e00"
+        alt="" />
+    </div>
+  </div>
+  <a href="">返回首页</a>
+  <script>
+    $("#li1").on("click", function () {
+      $("h2,#ppp,#qqq,#kkk,#hhh").css("display", "none");
+      $("#li2").css("background", "none");
+      $("#li3").css("background", "none");
+      $("#li4").css("background", "none");
+      $("#li5").css("background", "none");
+      $("#li1").css("background-color", "aqua");
+      $("#ccc").css("display", "block");
+    });
+    $("#li2").on("click", function () {
+      $("h2,#qqq,#hhh,#ccc,#kkk").css("display", "none");
+      $("#li1").css("background", "none");
+      $("#li3").css("background", "none");
+      $("#li5").css("background", "none");
+      $("#li4").css("background", "none");
+      $("#li2").css("background-color", "aqua");
+      $("#ppp").css("display", "block");
+    });
+    $("#li3").on("click", function () {
+      $("h2,#ccc,#ppp,#hhh,#kkk").css("display", "none");
+      $("#li1").css("background", "none");
+      $("#li2").css("background", "none");
+      $("#li3").css("background-color", "aqua");
+      $("#li4").css("background", "none");
+      $("#li5").css("background", "none");
+      $("#qqq").css("display", "block");
+    });
+    $("#li4").on("click", function () {
+      $("h2,#ccc,#ppp,#qqq,#kkk").css("display", "none");
+      $("#li1").css("background", "none");
+      $("#li2").css("background", "none");
+      $("#li3").css("background", "none");
+      $("#li5").css("background", "none");
+      $("#li4").css("background-color", "aqua");
+      $("#hhh").css("display", "block");
+    });
+    $("#li5").on("click", function () {
+      $("h2,#ccc,#ppp,#qqq,#hhh").css("display", "none");
+      $("#li1").css("background", "none");
+      $("#li2").css("background", "none");
+      $("#li3").css("background", "none");
+      $("#li4").css("background", "none");
+      $("#li5").css("background-color", "aqua");
+      $("#kkk").css("display", "block");
+    });
+    $("a").on("click", function () {
+      $("#kkk,#ccc,#ppp,#qqq,#hhh").css("display", "none");
+      $("#li1").css("background", "none");
+      $("#li2").css("background", "none");
+      $("#li3").css("background", "none");
+      $("#li4").css("background", "none");
+      $("#li5").css("background", "none");
+      $("h2").css("display", "block");
+    });
+  </script>
+</body>
+
+</html>

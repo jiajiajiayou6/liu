@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>考试题备忘录</title>
+    <script src="../common/jQuery/jquery-3.6.1.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            position: relative;
+            width: 100%;
+            line-height: 50px;
+            height: 50px;
+            border-bottom: 1px solid lightgray;
+        }
+
+        #box {
+            width: 40%;
+            margin: auto;
+            height: 500px;
+            border-radius: 25px;
+            box-shadow: 3px 3px 3px rgba(168, 166, 166, 0.5);
+            background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+        }
+
+        #son1 {
+            width: 80%;
+            height: 360px;
+            color: rgb(0, 0, 0);
+            background: #ffffff;
+            margin: auto;
+            box-shadow: 3px 3px 3px rgba(168, 166, 166, 0.5);
+            border-radius: 15px;
+        }
+
+        h1 {
+            width: 100%;
+            text-align: center;
+            height: 80px;
+            color: rgb(139, 6, 6);
+            line-height: 80px;
+        }
+
+        #xuanran {
+            width: 100%;
+            height: 50px;
+            position: relative;
+            line-height: 50px;
+            border-bottom: 1px solid rgb(255, 255, 255);
+        }
+
+        #xuanran input {
+            position: absolute;
+            line-height: 47px;
+            height: 47px;
+            width: 80%;
+            background: #ffffff;
+            border: none;
+            outline: none;
+        }
+
+        b {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            margin-left: 18px;
+            line-height: 50px;
+            display: inline-block;
+
+        }
+
+        .a1 {
+
+            position: absolute;
+            left: 30px;
+            top: 12px;
+            width: 25px;
+            height: 25px;
+        }
+
+        ul span {
+            width: 100%;
+            height: 50px;
+            position: absolute;
+            left: 60px;
+            line-height: 50px;
+            display: block;
+        }
+
+        img {
+            width: 45px;
+            height: 45px;
+        }
+
+        .s1 {
+            position: absolute;
+            left: 425px;
+            display: none;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        ul {
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+            overflow-y: scroll
+        }
+
+        .compulted {
+            text-decoration: line-through;
+            color: #aeabab;
+        }
+
+        a {
+            text-decoration: none;
+            height: 40px;
+            color: rgb(1, 187, 187);
+            line-height: 40px;
+            margin-left: 30px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <h1>备忘录</h1>
+        <div id="son1">
+            <div id="xuanran">
+                <b>
+                    <img src="./img/下箭头1.png">
+                </b>
+                <input id="suru" type="text" placeholder="请输入想要做什么" />
+            </div>
+            <ul></ul>
+            <div id="xiamainsuju">
+                <a href="#"><span id="num">0</span>个未完成</a>
+                <a href="#" id="suoyou">所有</a>
+                <a href="#" id="weiwancheng">未完成</a>
+                <a href="#" id="yiwancheng">已完成</a>
+                <a href="#" id="qingchu">清除完成项</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        // let data = ["ssan", '2', '3', '4', '5'];
+        let data1 = [];
+        let clicjLi;
+        $('document').ready(function () {
+
+            data1 = getLocalData("data1");
+            xuanranFun()
+            $("ul").on("click", "li", function () {
+                $("li").css("color", "white");
+                $("li").css("background", "");
+                $(this).css("color", "orange");
+                $(this).css("background", "gray");
+                $("li").find("strong").css("display", "none");
+                var strong = $(this).find("strong")
+                strong.css("display", "inline-block");
+                clicjLi = $(this).find("span");
+                console.log(clicjLi.text());
+            });
+            $("#xiamainsuju").on("click", "a", function () {
+                $("a").css("border", "none");
+                $(this).css("border", "2px solid red");
+            });
+            $("#suru").on("keydown", addFun);
+            $("#suoyou").on("click", suoyouFun);
+            $("#weiwancheng").on("click", weiwanchengFun);
+            $("#yiwancheng").on("click", yiwanchengFun);
+            $("#qingchu").on("click", qingchuFun);
+        });
+        //点击所有
+        function suoyouFun() {
+            xuanranFun();
+        }
+        //点击未完成
+        function weiwanchengFun() {
+            let tmp = data1.filter((item) => {
+                return item.status == false;
+            });
+            console.log(tmp);
+            xuanranFun2(tmp);
+        }
+        //点击已完成
+        function yiwanchengFun() {
+            let tmp = data1.filter((item) => {
+                return item.status == true;
+            });
+            console.log(tmp);
+            xuanranFun2(tmp);
+        }
+        //点击清除完成项
+        function qingchuFun() {
+            data1 = data1.filter((item) => {
+                return item.status == false;
+            });
+            localStorage.setItem("data1", JSON.stringify(data1));
+            data1 = getLocalData("data1");
+            xuanranFun(data1);
+        }
+        //erxixuanran
+        function xuanranFun2(tmp) {
+            let html = "";
+            console.log(tmp);
+            tmp.forEach((item, index) => {
+                html += `
+                <li >
+                    <input data-index='${index}' type="checkbox" class="a1" ${item.status ? "checked" : ""}>
+                    <span class="${item.status ? "compulted" : ""}" >${item.content}</span>
+                    <strong  data-index='${index}' class=s1 onclick="shanchu(this)">X</strong>
+                </li>
+                `
+            });
+            $("ul").html(html);
+        };
+        //渲染
+        function xuanranFun() {
+            let html = "";
+            console.log(
+                data1
+            );
+            data1.forEach((item, index) => {
+                html += `
+                <li >
+                    <input data-index='${index}' type="checkbox" class="a1" ${item.status ? "checked" : ""}>
+                    <span class="${item.status ? "compulted" : ""}" >${item.content}</span>
+                    <strong  data-index='${index}' class=s1 onclick="shanchu(this)">X</strong>
+                </li>
+                `
+            });
+            $("ul").html(html);
+            let cc = 0
+            data1.forEach((item, index) => {
+                console.log(item);
+                if (item.status == false) {
+                    console.log(item);
+                    cc++;
+                    console.log(cc);
+                }
+            })
+            $("#num").innerHTML = cc
+            xuanranFun3(cc)
+        };
+        //
+        function xuanranFun3(cc) {
+            $("#num").html(cc);
+        }
+        //修改input
+        $("#son1").on("click", "input", function () {
+            console.log($("input").siblings("span"));
+            // $("li").find("span").css("text-decoration", "line-through");
+            console.log(clicjLi.text());
+            let zhi;
+            console.log(data1);
+            zhi = clicjLi.text();
+            let index = event.target.dataset.index;
+            console.log(index);
+            data1[index].status = !data1[index].status;
+            // let cc = 0
+            // data1.forEach((item, index) => {
+            //     console.log(item);
+            //     if (item.status == false) {
+            //         console.log(item);
+            //         cc++;
+            //         console.log(cc);
+            //     }
+            // })
+            // $("#num").innerHTML = cc
+            // localStorage.setItem("data1", JSON.stringify(data1));
+            xuanranFun(data1)
+            // xuanranFun3(cc)
+        });
+
+        //删除
+        function shanchu(that) {
+            console.log(that);
+
+            console.log($(that).siblings("span").text())
+            zhi = $(that).siblings("span").text()
+            let index = event.target.dataset.index;
+            data1.splice(index, 1)
+            localStorage.setItem("data1", JSON.stringify(data1));
+            console.log(data1);
+            xuanranFun(data1)
+            // let cc = 0
+            // data1.forEach((item, index) => {
+            //     console.log(item);
+            //     if (item.status == false) {
+            //         console.log(item);
+            //         cc++;
+            //         console.log(cc);
+            //     }
+            // })
+            // $("#num").innerHTML = cc
+            // xuanranFun3(cc)
+        }
+
+        //全选
+        $("#xuanran").on("click", 'img', function () {
+            let ser = true;
+            console.log(data1);
+            if ($("ul input[ type='checkbox']:checked").length <= data1.length - 1) {
+                $("li input[ type='checkbox' ]").prop("checked", ser)
+                console.log(data1);
+                data1.forEach((item, index) => {
+                    return item.status = true
+                })
+                console.log(data1);
+            }
+            else {
+                $("li input[ type='checkbox' ]").prop("checked", "")
+                data1.forEach((item, index) => {
+                    return item.status = false
+                })
+                console.log(data1);
+            };
+            localStorage.setItem("data1", JSON.stringify(data1));
+            xuanranFun(data1)
+        });
+
+        //添加一个 
+        function addFun() {
+            if (event.keyCode == 13) {
+                //回车
+                console.log(this.value);
+                let data = {
+                    content: this.value,
+                    status: false,
+                };
+                if (this.value) {
+                    data1.push(data);
+                } console.log(this.value);
+                console.log(data1);
+                localStorage.setItem("data1", JSON.stringify(data1));
+                xuanranFun()
+                this.value = "";
+            }
+        }
+
+        //获取数组
+        function getLocalData(key) {
+            let data = localStorage.getItem(key);
+            if (data) {
+                return JSON.parse(data);
+            } else {
+                return [];
+            }
+        }
+
+
+
+    </script>
+</body>
+
+</html>

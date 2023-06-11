@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上午引入jQuery的双向列表穿梭</title>
+    <script src="../common/jQuery/jquery-3.6.1.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            padding-left: 20px;
+            height: 35px;
+            line-height: 35px;
+            width: 93.3%;
+            /* background-color: antiquewhite; */
+            color: rgb(255, 255, 255);
+            font-size: 17px;
+        }
+
+        body {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        #left {
+            position: absolute;
+            width: 300px;
+            height: 500px;
+            background-color: rgb(17, 72, 74);
+        }
+
+        #content {
+            position: absolute;
+            width: 100px;
+            height: 500px;
+            left: 300px;
+            background-color: rgb(17, 72, 74);
+            text-align: center;
+
+        }
+
+        img:first-child {
+            margin-top: 100px;
+        }
+
+        #right {
+            position: absolute;
+            width: 300px;
+            height: 500px;
+            left: 400px;
+            background-color: cadetblue;
+        }
+
+        .box11,
+        .box31 {
+            text-align: center;
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            font-size: 18px;
+            background-color: rgb(113, 180, 193);
+        }
+
+        .box12,
+        .box32 {
+            width: 100%;
+            height: 450px;
+            background-color: rgb(46, 113, 115);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="left">
+        <div class="box11">未显示</div>
+        <div class="box12">
+        </div>
+    </div>
+    <div id="content">
+        <img src="./img/箭头_页面_向右.png" onclick="rightyiFun()" />
+        <img src="./img/箭头_页面_向上.png" onclick="topyiFun()" />
+        <img src="./img/箭头_页面_向下.png" onclick="buttonyiFun()" />
+        <img src="./img/箭头_页面_向左.png" onclick="leftyiFun()" />
+    </div>
+    <div id="right">
+        <div class="box31">已显示</div>
+        <div class="box32"></div>
+    </div>
+    <script>
+        let letdata = ["模块一", "模块二", "模块三", "模块四"];
+        let rightdata = ["模块五", "模块六", "模块七"];
+        let clicjLi;
+        $(document).ready(function () {
+
+            xuanranleft()
+            xuanranright()
+            $(".box12").on("click", "li", function () {
+                $("li").css("color", "white");
+                $("li").css("background", "");
+                $(this).css("color", "orange");
+                $(this).css("background", "gray");
+                clicjLi = $(this);
+                console.log(clicjLi.text());
+            });
+            $(".box32").on("click", "li", function () {
+                $("li").css("color", "white");
+                $("li").css("background", "");
+                $(this).css("color", "orange");
+                $(this).css("background", "gray");
+                clicjLi = $(this);
+                console.log(clicjLi.text());
+            });
+        });
+        function xuanranleft() {
+            console.log(123);
+            let html = "";
+            letdata.forEach((item, index) => {
+                html += `
+                <li>${item}</li>
+                `;
+            });
+            $(".box12").html(html);
+        };
+
+        function xuanranright() {
+            let html = "";
+            rightdata.forEach((item, index) => {
+                html += `
+                <li>${item}</li>
+                `;
+            });
+            $(".box32").html(html);
+        };
+        function rightyiFun() {
+            if (letdata.includes(clicjLi.text())) {
+                console.log(clicjLi.text());
+                rightdata.push(clicjLi.text());
+                let letindex = letdata.findIndex((item, index) => {
+                    return item == clicjLi.text()
+                });
+                letdata.splice(letindex, 1)
+                console.log(rightdata);
+                console.log(letdata);
+                console.log(letindex);
+            } else if (rightdata.includes(clicjLi.text())) {
+                alert("不要慌你是右边数据")
+                return
+            }
+            xuanranleft()
+            xuanranright()
+            $(".box32 li:last").click()
+        };
+        function topyiFun() {
+            let letindex, rightindex
+            if (letdata.includes(clicjLi.text())) {
+                letindex = letdata.findIndex((item, index) => {
+                    return item == clicjLi.text()
+                });
+                if (letindex == 0) {
+                    alert("已经是第一个位置");
+                    return
+                } else {
+                    let er = clicjLi.text()
+                    letdata[letindex] = letdata[letindex - 1];
+                    letdata[letindex - 1] = er;
+                }
+            }
+            if (rightdata.includes(clicjLi.text())) {
+                rightindex = rightdata.findIndex((item, index) => {
+                    return item == clicjLi.text()
+                });
+                if (rightindex == 0) {
+                    alert("已经是第一个位置");
+                    return
+                } else {
+                    let er = clicjLi.text()
+                    console.log(er);
+                    rightdata[rightindex] = rightdata[rightindex - 1];
+                    rightdata[rightindex - 1] = er;
+                }
+            }
+            xuanranleft()
+            xuanranright()
+            if (letindex) {
+                $(".box12 li").eq(letindex - 1).click()
+            } else {
+                $(".box32 li").eq(rightindex - 1).click()
+            }
+        };
+        function buttonyiFun() {
+            let letindex, rightindex
+            if (letdata.includes(clicjLi.text())) {
+                letindex = letdata.findIndex((item, index) => {
+                    return item == clicjLi.text()
+                });
+                if (letindex == letdata.length - 1) {
+                    alert("已经是最后一个位置");
+                    return
+                } else {
+                    let er = clicjLi.text()
+                    console.log(er);
+                    letdata[letindex] = letdata[letindex + 1];
+                    letdata[letindex + 1] = er;
+                }
+                console.log(letindex);
+            }
+            if (rightdata.includes(clicjLi.text())) {
+                rightindex = rightdata.findIndex((item, index) => {
+                    return item == clicjLi.text()
+                });
+                if (rightindex == rightdata.length - 1) {
+                    alert("已经是最后一个位置");
+                    return
+                } else {
+                    let er = clicjLi.text()
+                    console.log(er);
+                    rightdata[rightindex] = rightdata[rightindex + 1];
+                    rightdata[rightindex + 1] = er;
+                }
+                console.log(rightindex);
+            }
+
+            console.log(3);
+            xuanranleft()
+            xuanranright()
+            if (letindex) {
+                $(".box12 li").eq(letindex + 1).click()
+            } else {
+                $(".box32 li").eq(rightindex + 1).click()
+            }
+        };
+        function leftyiFun() {
+            if (rightdata.includes(clicjLi.text())) {
+                console.log(clicjLi.text());
+                letdata.push(clicjLi.text());
+                let rightindex = rightdata.findIndex((item, index) => {
+                    return item == clicjLi.text()
+                });
+                rightdata.splice(rightindex, 1)
+                console.log(rightdata);
+                console.log(letdata);
+                console.log(rightindex);
+            } else if
+                (letdata.includes(clicjLi.text())) {
+                alert("不要慌你是左边数据")
+                return
+            }
+            console.log(4);
+            xuanranleft()
+            $(".box12 li:last").click()
+            xuanranright()
+        };
+    </script>
+</body>
+
+</html>

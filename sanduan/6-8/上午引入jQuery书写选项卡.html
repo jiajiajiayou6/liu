@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上午引入jQuery书写选项卡</title>
+    <script src="../common/jQuery/jquery-3.6.1.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        a::active {
+            color: black;
+        }
+
+        ul {
+            width: 480px;
+            background-color: aqua;
+        }
+
+        li {
+            width: 150px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            display: inline-block;
+            background-color: aqua;
+        }
+
+        .tabs-content-placeholder {
+            width: 480px;
+            height: 280px;
+            background-color: aquamarine;
+        }
+
+        .tabs-content-placeholder div {
+            width: 480px;
+            height: 280px;
+            background-color: aquamarine;
+        }
+    </style>
+
+<body>
+    <ul>
+        <li>
+            First tab
+        </li>
+        <li>
+            Second tab
+        </li>
+        <li>
+            Third tab
+        </li>
+    </ul>
+
+    <div class="tabs-content-placeholder">
+        <div>
+            <p>11Lorem ipsum dolor ist amet, consectetur adipiscing elit. Suspendisse molestie volutpat consectetur.
+                Class
+                aptent taciti sociosqu ad litora torquent per conubia nostra.</p>
+        </div>
+        <div>
+            <p>22</p>
+        </div>
+        <div>
+            <p>33Lorem ipsum dolor ist amet, consectetur adipiscing elit. Suspendisse molestie volutpat consectetur.
+                Class
+                aptent taciti sociosqu ad litora torquent per conubia nostra.</p>
+        </div>
+
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(".tabs-content-placeholder div:eq(0)").css("display", "block");
+            $(".tabs-content-placeholder div:eq(1)").css("display", "none");
+            $(".tabs-content-placeholder div:eq(2)").css("display", "none");
+        });
+        $("li:eq(0)").click(function () {
+            $(".tabs-content-placeholder div:eq(0)").css("display", "block");
+            $(".tabs-content-placeholder div:eq(1)").css("display", "none");
+            $(".tabs-content-placeholder div:eq(2)").css("display", "none");
+            console.log($(".tabs-content-placeholder div:eq(0)"));
+        });
+        $("li:eq(1)").click(function () {
+            $(".tabs-content-placeholder div:eq(0)").css("display", "none");
+            $(".tabs-content-placeholder div:eq(1)").css("display", "block");
+            $(".tabs-content-placeholder div:eq(2)").css("display", "none");
+        });
+        $("li:eq(2)").click(function () {
+            $(".tabs-content-placeholder div:eq(0)").css("display", "none");
+            $(".tabs-content-placeholder div:eq(1)").css("display", "none");
+            $(".tabs-content-placeholder div:eq(2)").css("display", "block");
+        });
+    </script>
+</body>
+
+</html>
+<!-- 日报
+今日学习： jQuery基本语法和选择器 事件处理 
+今日任务： 已完成
+今日问题： bug(双向列表穿梭数据之后点击li显示的背景色被恢复,但数据依旧可用) -->

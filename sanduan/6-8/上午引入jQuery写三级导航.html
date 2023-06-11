@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上午引入jQuery写三级导航</title>
+    <script src="../common/jQuery/jquery-3.6.1.min.js"></script>
+    <script src="../common/city.js"></script>
+</head>
+<select name="" id="province">
+    <option>请选择市</option>
+</select>
+<select name="" id="city">
+    <option value="">请选择市辖区</option>
+</select>
+<select name="" id="area">
+    <option value="">请选择区</option>
+</select>
+
+<body>
+    <script>
+        // var sheng = 0
+        $(function () {
+            console.log(citys[0])
+            var html = ''
+            for (i in citys) {
+                html += `<option value="${i}">${citys[i].name}</option>`
+            }
+            $('#province').append(html)
+            $('#province').change(function () {
+                var cuty = citys[$(this).val()].citys
+                $("#city").html(`<option value="">请选择市</option`)
+                var city = citys[$(this).val()].city
+                var html = ''
+                for (i in city) {
+                    html += `<option value="${i}">${city[i].name}</option>`
+                }
+                $("#city").append(html)
+                sheng = $(this).val()
+            })
+            $("#city").change(function () {
+                $("#area").html(`<option value="">请选择区</option>`)
+                var area = citys[sheng].city[$(this).val()].area
+                var html = ''
+                for (i in area) {
+                    html += `<option value="${i}">${area[i]}</option>`
+                }
+                $("#area").append(html)
+            })
+        })
+    </script>
+</body>
+
+</html>

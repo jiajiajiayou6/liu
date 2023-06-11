@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #box1 {
+        width: 300px;
+        height: 500px;
+        float: left;
+        border: 1px solid #ccc;
+        margin-right: 30px;
+    }
+
+    #box2 {
+        width: 300px;
+        height: 500px;
+        float: left;
+        border: 1px solid #ccc;
+        margin-left: 30px;
+    }
+
+    ul {
+        list-style: none;
+    }
+</style>
+
+<body>
+    <div id="box1">
+        <p style="border-bottom:1px solid #ccc;">
+            <input type="checkbox" id="leftAll">列表一
+        </p>
+        <ul id="leftUl">
+            <li><input type="checkbox" name="leftLi" id="">备选项1</li>
+            <li><input type="checkbox" name="leftLi" id="">备选项2</li>
+            <li><input type="checkbox" name="leftLi" id="">备选项3</li>
+            <li><input type="checkbox" name="leftLi" id="">备选项4</li>
+            <li><input type="checkbox" name="leftLi" id="">备选项5</li>
+        </ul>
+    </div>
+    <div style="float:left;margin-top:180px;">
+        <button id="right">>></button>
+        <br><br>
+        <button id="left"><<</button>
+    </div>
+    <div id="box2">
+        <p style="border-bottom:1px solid #ccc;">
+            <input type="checkbox" id="rightAll">列表二
+        </p>
+        <ul id="rightUl">
+            <li><input type="checkbox" name="rightLi" id="">备选项6</li>
+            <li><input type="checkbox" name="rightLi" id="">备选项7</li>
+            <li><input type="checkbox" name="rightLi" id="">备选项8</li>
+        </ul>
+    </div>
+</body>
+<script>
+    var leftLi = document.getElementsByName('leftLi')
+    leftAll.onchange = function () {
+        for (i = 0; i < leftLi.length; i++) {
+            if (leftAll.checked) {
+                leftLi[i].checked = true
+            } else {
+                leftLi[i].checked = false
+            }
+        }
+    }
+    for (i = 0; i < leftLi.length; i++) {
+        leftLi[i].onchange = function () {
+            for (i = 0; i < leftLi.length; i++) {
+                if (!leftLi[i].checked) {
+                    leftAll.checked = false
+                }
+            }
+        }
+    }
+    for (i = 0; i < leftLi.length; i++) {
+        leftLi[i].onchange=function(){
+            var flag=true
+            for(i=0;i<leftLi.length;i++){
+                if(leftLi[i].checked==false){
+                    flag=false
+                    break
+                }
+            }
+            leftAll.checked=flag
+        }
+    }
+
+    var rightUl=document.getElementById('rightUl')
+    var leftUl=document.getElementById('leftUl')
+    right.onclick=function(){
+        for(i=0;i<leftLi.length;i++){
+            if(leftLi[i].checked){
+                var liObj=document.createElement('LI')
+                var inpObj=document.createElement('INPUT')
+                inpObj.type='checkbox'
+                inpObj.name='rightLi'
+                liObj.appendChild(inpObj)
+                liObj.innerHTML+=leftLi[i].parentNode.innerText
+                rightUl.appendChild(liObj)
+                leftUl.removeChild(leftLi[i].parentNode)
+                i--
+            }
+        }
+        document.getElementById('leftAll').checked = false
+    }
+
+    var rightLi=document.getElementsByName('rightLi')
+    rightAll.onchange=function(){
+        for(i=0;i<rightLi.length;i++){
+            if(rightAll.checked){
+                rightLi[i].checked=true
+            }else{
+                rightLi[i].checked=false
+            }
+        }
+    }
+    for(i=0;i<rightLi.length;i++){
+        rightLi[i].onchange=function(){
+            for(i=0;i<rightLi.length;i++){
+                if(!rightLi[i].checked){
+                    rightAll.checked=false
+                }
+            }
+        }
+    }
+    for(i=0;i<rightLi.length;i++){
+        rightLi[i].onchange=function(){
+            var falg=true
+            for(i=0;i<rightLi.length;i++){
+                if(rightLi[i].checked==false){
+                    falg=false
+                    break
+                }
+            }
+            rightAll.checked=falg
+        }
+    }
+
+    left.onclick=function(){
+        for(i=0;i<rightLi.length;i++){
+            if(rightLi[i].checked){
+                var liObj=document.createElement('LI')
+                var inpObj=document.createElement('INPUT')
+                inpObj.type='checkbox'
+                inpObj.name='leftLi'
+                liObj.appendChild(inpObj)
+                liObj.innerHTML+=rightLi[i].parentNode.innerText
+                leftUl.appendChild(liObj)
+                rightUl.removeChild(rightLi[i].parentNode)
+                i--
+            }
+        }
+        document.getElementById('rightAll').checked=false
+    }
+
+</script>
+
+</html>

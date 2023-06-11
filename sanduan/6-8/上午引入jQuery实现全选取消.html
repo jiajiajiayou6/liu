@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上午引入jQuery实现全选取消</title>
+    <script src="../common/jQuery/jquery-3.6.1.min.js"></script>
+    <style>
+        li {
+            list-style: none;
+            color: #7e7e7e;
+        }
+
+        #Ul>li {
+            width: 400px;
+            height: 20px;
+            background-color: #ccc;
+            margin: 10px;
+        }
+
+        li:hover {
+            color: rgb(5, 67, 69);
+        }
+
+        ul ul {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="Ul">
+        <li class="li1"><input type="checkbox" /><span>人员</span></li>
+        <ul class="ul1">
+            <li><input type="checkbox" /><span>第一组01</span></li>
+            <li><input type="checkbox" /><span>第一组02</span></li>
+            <li><input type="checkbox" /><span>第一组03</span></li>
+            <li><input type="checkbox" /><span>第一组04</span></li>
+        </ul>
+        <li class="li2"><input type="checkbox" /><span>项目</span></li>
+        <ul class="ul2">
+            <li><input type="checkbox" /><span>第二组01</span></li>
+            <li><input type="checkbox" /><span>第二组02</span></li>
+            <li><input type="checkbox" /><span>第二组03</span></li>
+            <li><input type="checkbox" /><span>第二组04</span></li>
+        </ul>
+        <li class="li3"><input type="checkbox" /><span>机构</span></li>
+        <ul class="ul3">
+            <li><input type="checkbox" /><span>第三组01</span></li>
+            <li><input type="checkbox" /><span>第三组02</span></li>
+            <li><input type="checkbox" /><span>第三组03</span></li>
+            <li><input type="checkbox" /><span>第三组04</span></li>
+        </ul>
+        <script>
+            $(".li1").click(function () {
+                $("ul ul:eq(0)").css("display", "block");
+                $("ul ul:eq(1)").css("display", "none");
+                $("ul ul:eq(2)").css("display", "none");
+                // $("ul ul:eq(0)").toggle();
+            });
+            $(".li2").click(function () {
+                $("ul ul:eq(0)").css("display", "none");
+                $("ul ul:eq(1)").css("display", "block");
+                $("ul ul:eq(2)").css("display", "none");
+                // $("ul ul:eq(1)").toggle();
+            });
+            $(".li3").click(function () {
+                $("ul ul:eq(0)").css("display", "none");
+                $("ul ul:eq(1)").css("display", "none");
+                $("ul ul:eq(2)").css("display", "block");
+                // $("ul ul:eq(2)").toggle();
+            });
+            $(".li1 input[ type='checkbox' ]").on("click", function () {
+                let ser = $(this).prop("checked");
+                console.log(ser);
+                $(".ul1 input[type='checkbox']").prop("checked", ser)
+            });
+            $(".li2 input[ type='checkbox' ]").on("click", function () {
+                let ser = $(this).prop("checked");
+                console.log(ser);
+                $(".ul2 input[type='checkbox']").prop("checked", ser)
+            });
+            $(".li3 input[ type='checkbox' ]").on("click", function () {
+                let ser = $(this).prop("checked");
+                console.log(ser);
+                $(".ul3 input[type='checkbox']").prop("checked", ser)
+            });
+            $(".ul3 input[ type='checkbox']").on("click", function () {
+                let ser = $(this).prop("checked");
+                console.log($(".ul3 input[ type='checkbox']:checked").length == 4);
+                if ($(".ul3 input[ type='checkbox']:checked").length == 4) {
+                    $(".li3 input[ type='checkbox' ]").prop("checked", ser)
+                } else {
+                    $(".li3 input[ type='checkbox' ]").prop("checked", "")
+                };
+            });
+            $(".ul2 input[ type='checkbox']").on("click", function () {
+                let ser = $(this).prop("checked");
+                console.log($(".ul2 input[ type='checkbox']:checked").length == 4);
+                if ($(".ul2 input[ type='checkbox']:checked").length == 4) {
+                    $(".li2 input[ type='checkbox' ]").prop("checked", ser)
+                } else {
+                    $(".li2 input[ type='checkbox' ]").prop("checked", "")
+                }
+            });
+            $(".ul1 input[ type='checkbox']").on("click", function () {
+                let ser = $(this).prop("checked");
+                console.log($(".ul1 input[ type='checkbox']:checked").length == 4);
+                if ($(".ul1 input[ type='checkbox']:checked").length == 4) {
+                    $(".li1 input[ type='checkbox' ]").prop("checked", ser)
+                } else {
+                    $(".li1 input[ type='checkbox' ]").prop("checked", "")
+                };
+            });
+        </script>
+</body>
+
+</html>
