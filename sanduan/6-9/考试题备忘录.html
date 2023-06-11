@@ -157,6 +157,7 @@
         // let data = ["ssan", '2', '3', '4', '5'];
         let data1 = [];
         let clicjLi;
+        let tmp = []
         $('document').ready(function () {
 
             data1 = getLocalData("data1");
@@ -188,7 +189,7 @@
         }
         //点击未完成
         function weiwanchengFun() {
-            let tmp = data1.filter((item) => {
+            tmp = data1.filter((item) => {
                 return item.status == false;
             });
             console.log(tmp);
@@ -196,7 +197,7 @@
         }
         //点击已完成
         function yiwanchengFun() {
-            let tmp = data1.filter((item) => {
+            tmp = data1.filter((item) => {
                 return item.status == true;
             });
             console.log(tmp);
