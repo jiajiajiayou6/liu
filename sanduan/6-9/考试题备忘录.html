@@ -225,6 +225,17 @@
                 `
             });
             $("ul").html(html);
+            let cc = 0
+            tmp.forEach((item, index) => {
+                console.log(item);
+                if (item.status == false) {
+                    console.log(item);
+                    cc++;
+                    console.log(cc);
+                }
+            })
+            $("#num").innerHTML = cc
+            xuanranFun3(cc)
         };
         //渲染
         function xuanranFun() {
@@ -286,15 +297,26 @@
 
         //删除
         function shanchu(that) {
-            console.log(that);
-
-            console.log($(that).siblings("span").text())
-            zhi = $(that).siblings("span").text()
             let index = event.target.dataset.index;
-            data1.splice(index, 1)
-            localStorage.setItem("data1", JSON.stringify(data1));
-            console.log(data1);
-            xuanranFun(data1)
+            zhi = $(that).siblings("span").text()
+            if (data1) {
+                console.log(that);
+                console.log($(that).siblings("span").text())
+                data1.splice(index, 1)
+                localStorage.setItem("data1", JSON.stringify(data1));
+                console.log(data1);
+                xuanranFun(data1)
+            } else if (tmp) {
+                console.log(tmp);
+                tmp.splice(index, 1)
+                aacc = data1.findIndex((item, index) => {
+                    return item.includes(zhi)
+                })
+                console.log(acc);
+                data1.splice(aacc, 1)
+                localStorage.setItem("data1", JSON.stringify(data1));
+                xuanranFun2(tmp) //
+            }
             // let cc = 0
             // data1.forEach((item, index) => {
             //     console.log(item);
