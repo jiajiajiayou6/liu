@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+    <link rel="stylesheet" href="../common/layui/css/layui.css">
+    <script src="../common/layui/layui.js"></script>
+    <script src="../common/jQuery/jquery-3.6.1.min.js"></script>
+    <script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: rgb(255, 255, 255);
+        }
+
+        #box {
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            position: absolute;
+
+        }
+
+        #son1 {
+            width: 1519px;
+            height: 70px;
+            background-color: rgb(255, 255, 255);
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            margin: 0 auto;
+            box-shadow: 0 0 8px rgb(198, 198, 198);
+        }
+
+        #son2 {
+            width: 1519px;
+            height: 900px;
+            background-color: rgb(255, 255, 255);
+            margin: auto;
+            margin-top: 100px;
+            position: relative;
+        }
+
+        #sun1 {
+            width: 987px;
+            height: 70px;
+            line-height: 70px;
+            background-color: rgb(255, 255, 255);
+            margin: auto;
+        }
+
+        #topleft {
+            width: 200px;
+            float: left;
+        }
+
+        #topright {
+            width: 500px;
+            float: right;
+        }
+
+        #topright ul li {
+            height: 60px;
+            list-style: none;
+            display: inline-block;
+            font-size: 20px;
+            margin-left: 20px;
+        }
+
+        #topright ul li:hover {
+            border-bottom: 2px solid green;
+            color: green;
+        }
+
+        #topright ul li:last-child:hover {
+            border: none;
+        }
+
+        #son1:hover {
+            box-shadow: 0 0 8px rgb(87, 87, 87);
+        }
+
+        #son2 div {
+            width: 987px;
+            border-radius: 10px;
+            height: 150px;
+            background-color: rgb(112, 163, 146);
+            border: 1px solid grey;
+            margin: auto;
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 2px 2px rgb(208, 202, 202);
+        }
+
+        #son2 div:hover {
+            transform: scale(1.01);
+            box-shadow: 0 2px 2px 2px rgb(130, 127, 127);
+        }
+
+        #son2 div h3 {
+            margin: 20px;
+        }
+
+        #son2 div p {
+            margin: 20px;
+        }
+
+        #son2 div span {
+            margin: 10px 20px;
+        }
+
+        .shang {
+            position: relative;
+            left: 300px;
+            top: -40px;
+            display: none;
+        }
+
+        .xia {
+            position: relative;
+            top: -40px;
+            left: 1000px;
+        }
+
+        #son4 {
+            height: 160px;
+            width: 987px;
+            background-color: #ffffff;
+            margin: auto;
+            text-align: center;
+        }
+
+        #son4 div {
+            height: 40px;
+            color: #537690;
+            line-height: 40px;
+            text-align: center;
+        }
+
+        .sonaaa,
+        .sonright {
+            margin-right: 20px;
+            float: right;
+        }
+
+        form {
+            z-index: 3;
+            width: 300px;
+            height: 300px;
+            border-radius: 15px;
+            background-image: linear-gradient(0deg, #c1dfc4 0%, #deecdd 100%);
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            right: 0px;
+            top: 0px;
+            margin: auto;
+            display: none;
+            padding: 10px;
+            text-align: center;
+            line-height: 40px;
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="#" name="carsare" id="form">
+        <h1 style="text-align: center; color: white">添加</h1>
+        标签：<input type="text" name="one" id="one" /><br />
+        记录：<input type="text" name="two" id="two" /><br />
+        类型：<input type="text" name="three" id="three" /><br />
+        用于：<input type="text" name="four" id="four" /><br />
+        时间：<input type="text" name="fiex" id="fiex" /><br />
+        <input type="submit" class="js" value="提交" id="one" />
+        <input type="reset" class="as" value="取消" id="one" />
+    </form>
+    <div id="box">
+        <div id="son1">
+            <div id="sun1">
+                <div id="topleft">
+                    <h1>程序员小明</h1>
+                </div>
+                <div id="topright">
+                    <ul>
+                        <li style="border-bottom: 2px solid green;">首页</li>
+                        <li class="aa1" id="butt">添加</li>
+                        <li><input type="text" class="bb" id="wd" placeholder="搜索"> <i
+                                class="layui-icon layui-icon-search" style="font-size: 25px; color: #537690;"
+                                id="searchCar"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="son2"></div>
+        <div id="son3">
+            <button type="button" class="layui-btn layui-btn-primary layui-btn-radius shang">上一页</button>
+            <button type="button" class="layui-btn layui-btn-primary layui-btn-radius xia">下一页</button>
+        </div>
+        <div id="son4">
+            <div> 2018 - 2023 小明</div>
+            <div>访问人数 23835 总访问量 28611</div>
+            <div>由 Hexo 驱动 | 主题 Keep v3.6.1</div>
+            <div>京ICP备19029015号-1</div>
+        </div>
+    </div>
+    <script>
+        const quxiao = document.querySelector(".as");
+        const js = document.querySelector(".js");
+        const h1title = document.querySelector("h1")
+        const wd = document.getElementById("wd")
+        console.log(window.screen.availWidth);
+        console.log(window.screen.width);
+        let a = 2;
+        let bor = [
+            {
+                id: 1,
+                one: "开发随记11",
+                two: "记录每日开发过程中的一些碎片，持续更新",
+                three: "日常开发",
+                four: "dev",
+                fiex: "三个月前",
+            },
+            {
+                id: 2,
+                one: "开发随记22",
+                two: "记录每日开发过程中的一些碎片，持续更新",
+                three: "日常开发",
+                four: "dev",
+                fiex: "三个月前",
+            },
+            {
+                id: 3,
+                one: "开发随记33",
+                two: "记录每日开发过程中的一些碎片，持续更新",
+                three: "日常开发",
+                four: "dev",
+                fiex: "三个月前",
+            },
+            {
+                id: 4,
+                one: "开发随记44",
+                two: "记录每日开发过程中的一些碎片，持续更新",
+                three: "日常开发",
+                four: "dev",
+                fiex: "三个月前",
+            },
+            {
+                id: 5,
+                one: "开发随记55",
+                two: "记录每日开发过程中的一些碎片，持续更新",
+                three: "日常开发",
+                four: "dev",
+                fiex: "三个月前",
+            },
+        ];
+        let bor1 = [
+            {
+                id: 6,
+                one: "开发随记66",
+                two: "记录每日开发过程中的一些碎片，持续更新",
+                three: "日常开发",
+                four: "dev",
+                fiex: "三个月前",
+            },
+        ];
+        $(document).ready(function () {
+            xuanranFun(bor)
+            quxiao.addEventListener("click", quxiaoFun);
+
+            $("#butt").on("click", anniutianjia);
+            $("form").on("submit", tijiaoshujuFun);
+
+            // $('.aa1').click(function () {
+            //     window.open('添加.html');
+            // });
+        });
+        //删除
+        function shanchu() {
+            let index = event.target.dataset.index;
+            console.log(index);
+            if (a == 2) {
+                bor.splice(index, 1);
+                xuanranFun(bor)
+            } else {
+                bor1.splice(index, 1)
+                xuanranFun(bor1)
+            }
+
+        }
+
+        //取消
+        function quxiaoFun() {
+            form.style.display = "none";
+        };
+        //搜索
+        $("#searchCar").on("click", function () {
+
+            if (a == 2) {
+                let searchRes = bor.filter((item) => {
+                    return item.one.includes($("#wd").val());
+                });
+                bor = searchRes;
+                xuanranFun(bor);
+            } else {
+                let searchRes = bor1.filter((item) => {
+                    return item.one.includes($("#wd").val());
+                });
+                bor1 = searchRes;
+                xuanranFun(bor1)
+            }
+
+        });
+        //添加
+        function anniutianjia() {
+            console.log(1111);
+            h1title.innerHTML = "添加信息"
+            js.style.display = "inline-block";
+            quxiao.value = "取消"
+            form.style.display = " block";
+            form.reset()
+            console.log(bor);
+
+        };
+        $("#son2").scroll(function () {
+            console.log(1111);
+            if (window.pageYOffset > 200 + "px") {
+                $("#son1").style.height = "50px"
+            } else {
+                $("#son1").style.height = "67px"
+            }
+        })
+        function chakan() {
+            let index = event.target.dataset.index;
+            console.log(index);
+            localStorage.setItem("user", JSON.stringify(bor));
+            console.log(bor[index]);
+            window.open("查看全文.html")
+        }
+        function tijiaoshujuFun() {
+            event.preventDefault();
+            let le = bor.length;
+            if (h1title.innerHTML == "添加信息") {
+                console.log(1535);
+                // xuanranFun()
+                let data = {
+                    id: le++,
+                    one: $("#one").val(),
+                    two: $("#two").val(),
+                    three: $("#three").val(),
+                    four: $("#four").val(),
+                    fiex: $("#fiex").val(),
+                };
+                bor1.push(data);
+                console.log(bor1);
+                form.style.display = "none";
+                xuanranFun(bor1)
+                let user = localStorage.getItem("bor1");
+            };
+        };
+        function xuanranFun(bor = bor1) {
+            console.log(bor);
+            let html = "";
+            bor.forEach((item, index) => {
+                html += `
+                <div>
+                    <h3>${item.one}</h3>
+                    <p>${item.two}</p>
+                    <span>${item.three}</span>
+                    <a>${item.four}</a>
+                    <span>${item.fiex}</span>
+                    <a  data-index=${index} class="sonaaa">删除></a>
+                    <a  data-index=${index} class="sonright">阅读全文></a>
+                </div>  
+                `
+            });
+            //  href="查看全文.html"
+            $("#son2").html(html)
+            $(".sonright").on("click", chakan)
+            $(".sonaaa").on("click", shanchu)
+
+            let user = localStorage.getItem("user");
+        };
+        $("#son3").on("click", ".xia", function () {
+            xuanranFun(bor1)
+            $(".shang").css("display", "inline-block")
+            a = 1
+        })
+        $("#son3").on("click", ".shang", function () {
+            xuanranFun(bor)
+            $(".shang").css("display", "none")
+            a = 2
+        })
+
+    </script>
+</body>
+
+</html>

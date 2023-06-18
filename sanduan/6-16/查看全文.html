@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查看全文</title>
+    <link rel="stylesheet" href="../common/layui/css/layui.css">
+    <script src="../common/layui/layui.js"></script>
+    <script src="../common/jQuery/jquery-3.6.1.min.js"></script>
+    <script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
+</head>
+
+<body>
+    <script>
+        let user = localStorage.getItem("user");
+        console.log(user);
+        function xuanranFun(bor = bor1) {
+            console.log(bor);
+            let html = "";
+            bor.forEach((item, index) => {
+                html += `
+                <div>
+                    <h3>${item.one}</h3>
+                    <p>${item.two}</p>
+                    <span>${item.three}</span>
+                    <a>${item.four}</a>
+                    <span>${item.fiex}</span>
+                    <a  data-index=${index} class="sonaaa">删除></a>
+                    <a  data-index=${index} class="sonright">阅读全文></a>
+                </div>  
+                `
+            });
+            //  href="查看全文.html"
+            $("#son2").html(html)
+            $(".sonright").on("click", chakan)
+            $(".sonaaa").on("click", shanchu)
+
+            let user = localStorage.getItem("user");
+        };
+    </script>
+
+</body>
+
+</html>
