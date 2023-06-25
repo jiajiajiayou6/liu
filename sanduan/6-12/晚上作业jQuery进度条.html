@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>晚上作业jQuery进度条</title>
+    <script src="../common/jQuery/jquery-3.6.1.min.js"></script>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #son1 {
+            width: 200px;
+            height: 100px;
+            line-height: 100px;
+            color: white;
+            text-align: center;
+            border-radius: 25px;
+            background-color: gray;
+            margin: auto;
+        }
+
+        #son2 {
+            width: 300px;
+            margin: auto;
+            height: 50px;
+            color: white;
+            background-color: rgb(131, 214, 7);
+            line-height: 50px;
+            text-align: center;
+            margin-top: 20px;
+            border-radius: 15px;
+        }
+
+        #boox1 {
+            display: none;
+            margin-top: 150px;
+            /* z-index: -1; */
+        }
+
+        #boox2 {
+            /* z-index: 1; */
+            width: 0;
+            height: 30px;
+            line-height: 30px;
+            display: flex;
+            text-align: center;
+            border-radius: 5px;
+            background-color: #00FFFF;
+
+
+        }
+
+        #booox2 {
+            width: 200px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 5px;
+
+            margin: auto;
+            border: 1px solid gray;
+            margin-top: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="boox1">
+        <div id="box">
+            <div id="son1">加载完成</div>
+            <div id="son2">
+                <div id="sun2">100%</div>
+            </div>
+        </div>
+    </div>
+    <div id="booox2">
+        <div id="boox2">
+            <span id="sp">
+                0
+            </span>
+            <b>%</b>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("#boox2").css("width", "0px");
+            var speed = 50;
+            bar = setInterval(function () {
+                nowWidth = parseInt($("#boox2").width());
+                if (nowWidth <= 200) {
+                    nowWidth++
+                    barWidth = (nowWidth) + "px";
+                    $("#boox2").css("width", barWidth);
+                    seeee = Math.floor(nowWidth * 0.5)
+                    $("#sp").html(seeee);
+                } else {
+                    clearInterval(bar);
+                    $("#boox1").css("display", 'block');
+                    $("#booox2").css("display", 'none');
+                };
+            }, speed);
+
+        });
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下午练习Dom事件</title>
+    <script src="../common/jQuery/jquery-3.6.1.min.js"></script>
+</head>
+
+<body>
+    <div id="box">123456789</div>
+    <button>点击</button>
+    <script>
+        $("#box").css({
+            color: "aqua",
+            fontSize: "40px",
+            background: "transparent",
+        });
+        $("button").click(() => {
+            // $("#box").toggle();
+            $("#box").fadeToggle(2000);
+
+        });
+    </script>
+</body>
+
+</html>

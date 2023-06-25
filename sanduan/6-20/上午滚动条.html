@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../common/jQuery/jquery-3.7.0.js"></script>
+    <link rel="stylesheet" href="../common/进度条/进度条.css">
+    <script src="../common/进度条/进度条.js"></script>
+    <script src="../common/进度条/jquery.pjax.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <a href="上午滚动条.html" data-pjax>111111</a>
+        <a href="上午切换页面.html" data-pjax>222222</a>
+    </div>
+    <div id="pjax-container">
+        <h1>5555555555</h1>
+    </div>
+    <script>
+        $(function () {
+            $(document).pjax("a[data-pjax]", "#pjax-container", {
+                fragment: "#pjax-container",
+                timeout: 5000,
+            });
+            // $(document).on("pjax:start", function () {
+            //     console.log(123212);
+            // });
+
+            $(document).on('pjax:start', function () {
+                NProgress.start();
+            });
+            $(document).on('pjax:end', function () {
+                NProgress.done();
+            });
+            $(document).on("pjax:complete", function () {
+
+            });
+        });
+    </script>
+</body>
+
+</html>

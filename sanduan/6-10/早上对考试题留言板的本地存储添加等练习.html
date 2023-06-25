@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>考试题备忘录</title>
+    <script src="../common/jQuery/jquery-3.6.1.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            position: relative;
+            width: 100%;
+            line-height: 50px;
+            height: 50px;
+            border-bottom: 1px solid lightgray;
+        }
+
+        #box {
+            width: 40%;
+            margin: auto;
+            height: 500px;
+            border-radius: 25px;
+            box-shadow: 3px 3px 3px rgba(168, 166, 166, 0.5);
+            background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+        }
+
+        #son1 {
+            width: 80%;
+            height: 360px;
+            color: rgb(0, 0, 0);
+            background: #ffffff;
+            margin: auto;
+            box-shadow: 3px 3px 3px rgba(168, 166, 166, 0.5);
+            border-radius: 15px;
+        }
+
+        h1 {
+            width: 100%;
+            text-align: center;
+            height: 80px;
+            color: rgb(139, 6, 6);
+            line-height: 80px;
+        }
+
+        #xuanran {
+            width: 100%;
+            height: 50px;
+            position: relative;
+            line-height: 50px;
+            border-bottom: 1px solid rgb(255, 255, 255);
+        }
+
+        #xuanran input {
+            position: absolute;
+            line-height: 47px;
+            height: 47px;
+            width: 80%;
+            background: #ffffff;
+            border: none;
+            outline: none;
+        }
+
+        b {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            margin-left: 18px;
+            line-height: 50px;
+            display: inline-block;
+
+        }
+
+        .a1 {
+
+            position: absolute;
+            left: 30px;
+            top: 12px;
+            width: 25px;
+            height: 25px;
+        }
+
+        ul span {
+            width: 100%;
+            height: 40px;
+            position: absolute;
+            left: 60px;
+            line-height: 40px;
+            display: block;
+        }
+
+        img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .s1 {
+            position: absolute;
+            left: 425px;
+            /* display: none; */
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        ul {
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+            overflow-y: scroll
+        }
+
+        .compulted {
+            text-decoration: line-through;
+            color: #aeabab;
+        }
+
+        a {
+            text-decoration: none;
+            width: 19%;
+            height: 40px;
+            text-align: center;
+            color: rgb(1, 187, 187);
+            line-height: 40px;
+            display: inline-block;
+        }
+
+        #xiamainsuju {
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <h1>备忘录</h1>
+        <div id="son1">
+            <div id="xuanran">
+                <b>
+                    <img id="img" src='./img/下箭头1.png'>
+                </b>
+                <input id="suru" type="text" placeholder="请输入想要做什么" />
+            </div>
+            <ul></ul>
+            <div id="xiamainsuju">
+                <a href="#"><span id="num">0</span>个未完成</a>
+                <a href="#" id="suoyou">所有</a>
+                <a href="#" id="weiwancheng">未完成</a>
+                <a href="#" id="yiwancheng">已完成</a>
+                <a href="#" id="qingchu">清除完成项</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        let data1 = [];
+        let allCheck = false;
+        $(function () {
+            //添加
+            $("#suru").keydown(addItem);
+            //本地存储
+            let data = getLocalData();
+            //渲染
+            xuanran(data1);
+        });
+        //添加
+        const addItem = (params) => {
+            if (event.keyCode != 13) return;
+            let data = {
+                content: $("#suru").val(),
+                status: false,
+            };
+            data1.push(data);
+            console.log(data1);
+            $("#suru").val(""),
+                xuanran()
+        };
+        //本地存储
+        const getLocalData = () => {
+            let data = localStorage.getItem("data1");
+            if (data != null) {
+                data1 = JSON.parse(data);
+            };
+            xuanran()
+        };
+        //渲染
+        const xuanran = () => {
+            let html = "";
+            console.log(data1);
+            data1.forEach((item, index) => {
+                html += `
+                <li >
+                    <input data-index='${index}' type="checkbox" class="a1" ${item.status ? "checked" : ""}>
+                    <span class="${item.status ? "compulted" : ""}" >${item.content}</span>
+                    <strong  data-index='${index}' class=s1 onclick="shanchu(this)">X</strong>
+                </li>
+                `
+            });
+            $("ul").html(html);
+            $("ul input").on("change", statusFun);
+            $("ul strong").on("click", delFun);
+            // countFun(data1)
+            localStorage.setItem("data1", JSON.stringify(data1));
+            checkAllFun()
+        };
+        const statusFun = function () {
+            let checked = $(this).prop("checked");
+            console.log(checked);
+            let index = $(this).parent().index();
+            data1[index].status = checked;
+            xuanran()
+        };
+        const delFun = function () {
+            let index = $(this).parent().index();
+            data1.splice(index, 1);
+            xuanran()
+        };
+        const checkAllFun = function () {
+            if (data1.length == 0) {
+                1
+            }
+        };
+        //未完成的数量
+        // const countFun = () => {
+        //     let data = dada1.filter((currentItem) => {
+        //         currentItem.status == false;
+        //     });
+        //     console.log(data);
+        //     $("#num").html(data.length);
+        // };
+    </script>
+</body>
+
+</html>

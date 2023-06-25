@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Demo</title>
+    <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
+    <link href="../common/layui/css/layui.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .aa1 {
+            width: 180px;
+            height: 150px;
+            margin: 30px;
+        }
+
+        .layui-anim {
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            line-height: 150px;
+            background-image: linear-gradient(0deg, #cfd9df 0%, #e2ebf0 100%);
+            border-radius: 50%;
+        }
+
+        .layui-btn {
+            margin-left: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aa1">
+        <div class="layui-anim" id="example-anim-element" style="padding: 16px 0;">
+            目标元素
+        </div>
+        <button class="layui-btn layui-btn-primary" id="example-anim-usage">点击触发动画</button>
+    </div>
+    <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+    <script src="../common/layui/layui.js"></script>
+    <script>
+        layui.use(function () {
+            var $ = layui.$;
+            var elem = $('#example-anim-element');
+            var animName = 'layui-anim-down'; // 动画类名
+
+            // 通过事件简单演示动画过程
+            $('#example-anim-usage').on('click', function () {
+                elem.removeClass(animName);
+                setTimeout(function () {
+                    elem.addClass(animName); // 给目标元素追加「往下滑入」的动画
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

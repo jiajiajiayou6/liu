@@ -318,8 +318,7 @@
                 });
                 bor1 = searchRes;
                 xuanranFun(bor1)
-            }
-
+            };
         });
         //添加
         function anniutianjia() {
@@ -361,11 +360,11 @@
                     four: $("#four").val(),
                     fiex: $("#fiex").val(),
                 };
-                bor1.push(data);
-                console.log(bor1);
+                bor.push(data);
+                console.log(bor);
                 form.style.display = "none";
-                xuanranFun(bor1)
-                let user = localStorage.getItem("bor1");
+                xuanranFun(bor)
+                let user = localStorage.getItem("bor");
             };
         };
         function xuanranFun(bor = bor1) {
@@ -388,7 +387,6 @@
             $("#son2").html(html)
             $(".sonright").on("click", chakan)
             $(".sonaaa").on("click", shanchu)
-
             let user = localStorage.getItem("user");
         };
         $("#son3").on("click", ".xia", function () {

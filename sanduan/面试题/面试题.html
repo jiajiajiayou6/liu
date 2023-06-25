@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面试题</title>
+</head>
+
+<body>
+    <script>
+        // var foo = function bar() { }
+        // console.log(typeof bar);
+
+        // var a = 1;
+        // if (true) {
+        //     console.log(a);
+        //     let a = 2;
+        // }
+
+        // let x = 1;
+        // function f1(x, y = x) {
+        //     console.log(y);
+        // }
+        // function f2(y = x) {
+        //     let x = 0;
+        //     console.log(y);
+        // }
+        // f2(2);
+        // f1();
+
+        // function F() {
+        //     this.a = 1;
+        // }
+        // var obj = new F();
+        // console.log(obj.prototype);
+
+        // var c = 1;
+        // function c() {
+        //     console.log(c);
+        //     var c = 3;
+        // }
+        // console.log(c);
+        // c(2);
+
+        // var name = 'kaivan';
+        // console.log(typeof name);
+        // (function () {
+        //     if (typeof name === 'undefined') {
+        //         var name = 'chen';
+        //         console.log(name);
+        //     } else {
+        //         console.log(name);
+        //     }
+        // })();
+
+        // function f() {
+        //     return f;
+        // }
+        // console.log(new f() instanceof f);
+
+        // console.log(1 + '2' + '2');
+        // // console.log(typeof (1 + '2' + '2'));
+        // console.log(1 + +'2' + '2');
+        // // console.log(typeof (1 + +'2' + '2'));
+        // console.log(+ '1' - +'1' + '2');
+        // // console.log(typeof (+ '1' - +'1' + '2'));
+        // console.log('A' - 'B' + '2');
+        // // console.log(typeof ('A' - 'B' + '2'));
+        // console.log('A' - 'B' + 2)
+        // // console.log(typeof ('A' - 'B' + 2));
+
+        // var a = 666;
+        // console.log(++a);
+        // // console.log(a++);
+        // console.log(a);
+
+        // console.log(c);
+        // function c(a) {
+        //     console.log(a);
+        //     var a = 3;
+        //     function a() {
+        //     }
+        // }
+        // c(2);
+
+        // var a;
+        // var b = 'undefined';
+        // console.log(typeof a);
+        // console.log(typeof b);
+        // console.log(typeof c);
+
+        // var obj = { n: 1 };
+        // function fn2(a) {
+        //     a.n = 2;
+        // }
+        // fn2(obj);
+        // console.log(obj.n);
+
+        // var x = 10;
+        // function fn() {
+        //     console.log(x);
+        // }
+        // function show(f) {
+        //     var x = 20;
+        //     console.log(x);
+        //     fn();
+        //     console.log(x);
+        // }
+        // show(fn);
+
+        // Object.prototype.bar = 1;
+        // var foo = {
+        //     goo: undefined,
+        // };
+        // console.log(foo.bar);
+        // console.log("bar");
+        // console.log('bar' in foo);
+        // console.log(foo.hasOwnProperty('bar'));
+        // console.log(foo.hasOwnProperty('goo'));
+        // // hasOwnProperty(propertyName)方法 是用来检测属性是否为对象的自有属性
+
+        // Object.prototype.bar = 1;
+        // var foo = {
+        //     moo: 2,
+        // }
+        // for (var i in foo) {
+        //     console.log(i);
+        // }
+        // 前端常见面试题之构造函数原型prototype
+        // JS规定每一个构造函数都有一个prototype属性，指向另一个对象，这里值得注意的是prototype就是一个对象，而这个对象的所有属性和方法，都会被构造函数所拥有。
+        // 为了让所有实例对象可以共享我们的方法，我们可以采用prototype，将不变的方法直接定义在prototype对象上。
+        // 所谓的原型：就是一个对象，我们也将prototype称为原型对象。
+        // 原型的作用：可以让我们共享方法。
+        // 为啥要使用原型：
+        // 因为构造函数方法虽然好用，但是存在内存浪费的问题，每实例化一个对象的方法，就开辟一片内存，这样就会造成内存浪费。原型的出现可以让我们去共享这些方法，减少内存的消耗。
+
+
+        // function Person(firstName, lastName) {
+        //     this.firstName = firstName;
+        //     this.lastName = lastName;
+        // }
+        // const lydia = new Person('Lydia', 'Hallie');
+        // const sarch = Person('Sarch', 'Smith');
+        // console.log(lydia);
+        // console.log(sarch);
+
+        // class Chameleon {
+        //     static colorChange(newColor) {
+        //         this.newColor = newColor;
+        //         return this.newColor;
+        //     }
+        //     constructor({ newColor = 'green' } = {}) {
+        //         this.newColor = newColor;
+        //     }
+        // }
+        // const freddie = new Chameleon({
+        //     newColor: 'purple'
+        // })
+        // freddie.colorChange('orange')
+
+        // async function getData() {
+        //     return await Promise.resolve("I made it!");
+        // }
+        // const data = getData();
+        // console.log(data);
+
+        // const bird = {
+        //     size: 'small'
+        // }
+        // const mouse = {
+        //     name: 'Micky',
+        //     small: true
+        // }
+        // // console.log(mouse.bird.size);//报错
+        // console.log(mouse[bird.size]);
+        // console.log(mouse[bird['size']]);
+
+
+        // const shape = {
+        //     radius: 10,
+        //     diameter() {
+        //         return this.radius * 2
+        //     },
+        //     perimeter: () => 2 * Math.PI * this.radius
+        // }
+        // console.log(shape.diameter());//20
+        // console.log(shape.perimeter());//NAN
+
+        // for (var i = 0; i < 3; i++) {
+        //     setTimeout(() => {
+        //         console.log(i);//3,3,3
+        //     }, 1)
+        // }
+        // for (let i = 0; i < 3; i++) {
+        //     setTimeout(() => {
+        //         console.log(i);//0,1,2
+        //     }, 1)
+        // }
+
+        // function sayHi() {
+        //     console.log(name); //undefined
+        //     console.log(age);// 
+
+        //     var name = 'Lydia';
+        //     let age = 21;
+        // }
+        // sayHi()
+        // 、undefinede和undefined
+
+        // const firstPromise = new Promise((res, rej) => {
+        //     setTimeout(res, 500, 'one')
+        // });
+        // const secondPromise = new Promise((res, rej) => {
+        //     setTimeout(res, 100, 'two')
+        // });
+        // Promise.race([firstPromise, secondPromise]).then(res => {
+        //     console.log(res)  //two
+        // })
+
+        const newArr = [1, 2, 3].map(n => {
+            if (typeof n === 'number') return;
+            return n * 2;
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下午jQuery引用杂项方法</title>
+    <script src="../common/jQuery/jquery-3.6.1.min.js"></script>
+</head>
+
+<body>
+    <!-- <button id="box">点击</button>
+    <button id="box1">传入</button>
+    <div></div>
+    <script>
+        $("#box").click(function () {
+            $("div").data("greeting", "Hello, world!");
+        });
+        $("#box1").click(function () {
+            alert($("div").data("greeting"));
+        });
+    </script> -->
+    <!-- <div id="box">
+        <p class="p1">123</p>
+    </div>
+    <div id="box1">
+        <p class="p1">123</p>
+    </div>
+    <div id="box2">
+        <p class="p1">123</p>
+    </div>
+    <script>
+        $("p").each(function (index, item) {
+            let div = $('#box')[0];
+            let p = $(".p1")[index];
+            console.log($.contains(div, p));
+        })
+    </script> -->
+    <!-- <button>输出每个列表项的值</button>
+    <ul>
+        <li>Coffee</li>
+        <li>Milk</li>
+        <li>Soda</li>
+    </ul>
+    <script>
+        $(document).ready(function () {
+            $("button").click(function () {
+                $("li").each(function () {
+                    alert($(this).text())
+                });
+            });
+        });
+    </script> -->
+    <!-- <p>这是一个段落。</p>
+    <button>获取P的DOM元素</button>
+    <div></div>
+    <script>
+        $(document).ready(function () {
+            $("button").click(function () {
+                x = $("p").get(0);
+                $("div").text(x.nodeName + ": " + x.innerHTML);
+            });
+        });
+    </script> -->
+    
+</body>
+
+</html>

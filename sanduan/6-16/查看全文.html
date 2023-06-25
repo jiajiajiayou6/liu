@@ -14,8 +14,9 @@
 <body>
     <script>
         let user = localStorage.getItem("user");
+        console.log(modelId);
         console.log(user);
-        function xuanranFun(bor = bor1) {
+        function xuanranFun(user) {
             console.log(bor);
             let html = "";
             bor.forEach((item, index) => {
@@ -33,10 +34,6 @@
             });
             //  href="查看全文.html"
             $("#son2").html(html)
-            $(".sonright").on("click", chakan)
-            $(".sonaaa").on("click", shanchu)
-
-            let user = localStorage.getItem("user");
         };
     </script>
 

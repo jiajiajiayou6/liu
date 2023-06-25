@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>早上jQuery方法Ajax请求练习</title>
+    <script src="../common/jQuery/jquery-3.6.1.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: auto;
+        }
+
+        tr {
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <form>
+            曲名：<input type="text" name="">
+            主唱：
+            价格：
+            年份：
+        </form>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>曲名</th>
+                    <th>主唱</th>
+                    <th>价绍</th>
+                    <th>年份</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script>
+        let obj = { name: 44 };
+        console.log(obj[0]);
+        console.log(obj);
+        console.log(Object.values(obj).length == 0);
+        console.log(Object.keys(obj).length == 1);
+        console.log(JSON.stringify(obj) == "{}");
+        console.log();
+        $(document).ready(function () {
+            //获取数据
+            huoqu()
+        });
+        //获取数据
+        function huoqu() {
+            $.ajax({
+                url: 'https://mp3.zzgoodqc.cn/api/songs',
+                data: {
+                    name: "zhoujielun",
+                    age: 38
+                },
+                success: function (res) {
+                    console.log(res);
+                    xuanran(res)
+                },
+            });
+        }
+        //渲染页面
+        function xuanran(res) {
+            let html = "";
+            console.log(res);
+            res.data.forEach((item, index) => {
+                html += `
+                <tr>
+                   <td>${item.id}</td>
+                   <td>${item.album}</td>
+                   <td>${item.artist}</td>
+                   <td>${item.genre}</td>
+                   <td>${item.year}</td>
+                   <td>
+                    <button>删除</button>
+                    <button>修改</button> 
+                    <button>查看</button>
+                   </td>
+                </tr>
+                `
+            });
+            $("tbody").html(html);
+        };
+        //添加
+        // let $ = {
+        //     ajax: function (options) {
+        //         if (!options) {
+        //             console.log(58);
+        //             return false
+        //         }
+        //         let xhr = new XMLHttpRequest();
+        //         if (options.type.trim().toLowerCase() == "get") {
+        //             if (options.data){
+        //             }
+        //         }
+        //         xhr.open(options.type, options.url, options.async);
+        //         xhr.send();
+        //     },
+        // };
+
+        // $.ajax({
+        //     url: "https://mp3.zzgoodqc.cn/api/songs",
+        //     data: {},
+        //     dataType: "json",
+        //     type: "post",
+        //     success: function () {
+        //         console.log(data);
+        //     },
+        // });
+    </script>
+</body>
+
+</html>

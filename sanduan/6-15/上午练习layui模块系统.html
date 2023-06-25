@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="../common/layui/css/layui.css" rel="stylesheet">
+    <script src="../common/layui/layui.js"></script>
+    <script src="./212.js"></script>
+    <style>
+        /* #box::after {
+            content: "你好啊";
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        } */
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <button tyoe="button" class="layui-btn layui-btn-normal">百搭按钮</button>
+    <script>
+        // let url = layui.url("http://www.baidu.com/abc/edf?name=zs&age=18");
+        // layui.data("test", {
+        //     key: "nickname",
+        //     value: "张三",
+        // });
+        // console.log(layui.cache);
+        // console.log(layui.getStyle(document.body, "width"));
+        // let arr = [1, 2, 3, 4];
+        // console.log(layui.type(arr) == "array");
+
+        // layui.define(function (exports) {
+        //     console.log(9999);
+        //     exports("demo", {
+        //         msg: "Hello Demo",
+        //     });
+        // });
+
+        layui.define(function (exports) {
+            let data = {
+                msg: "Hello Demo",
+                fun: function () {
+                    return "我是方法";
+                },
+            };
+            exports("demo", data);
+            layui.use(["demo", "layer"], function () {
+                let demo = layui.demo;
+                console.log(demo.fun());
+            });
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上午练习引入jQuery的form方法</title>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <form action="" id="myform">
+            姓名：<input type="text" name="a" /><br>
+            身份证：<input type="text" name="b" />
+        </form>
+    </div>
+    <script>
+        $(function () {
+            $("#myform").validate({
+                rules: {
+                    a: {
+                        arules: ["张三", "李四"],
+                    },
+                    b: {
+                        brules: "",
+                    },
+                },
+                message: {
+                    a: {
+                        arules: "请输入张三或者李四",
+                    },
+                    b: {
+                        brules: "请输入有效身份证号码",
+                    },
+                },
+            });
+            $.validator.addMethod(
+                "arules",
+                function (value, ele, params) {
+                    return params.includes(value);
+                },
+                "请输入规定内容"
+            );
+            $.validator.addMethod(
+                "brules",
+                function (value, ele, params) {
+                    let reg = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+                    return reg.test(value);
+                },
+                "请输入规定内容"
+            );
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下午练习考试题的头部</title>
+    <link rel="stylesheet" href="../common/layui/css/layui.css">
+    <link rel="stylesheet" href="../common/进度条/进度条.css">
+    <script src="../common/jQuery/jquery-3.6.1.min.js"></script>
+    <script src="../common/layui/layui.js"></script>
+    <script src="../common/进度条/jquery.pjax.js"></script>
+    <script src="../common/进度条/进度条.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            margin: auto;
+        }
+
+
+        #header {
+            position: fixed;
+            z-index: 1;
+            width: 1500px;
+            height: 70px;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: 0 auto;
+            background-color: rgb(255, 255, 255);
+            box-shadow: 0 0 8px rgb(175, 170, 170);
+        }
+
+        #header:hover {
+            box-shadow: 0 0 8px rgb(87, 87, 87);
+        }
+
+        .content {
+            position: relative;
+            margin: auto;
+            margin-top: 75px;
+            width: 1500px;
+            height: 970px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        #tooder {
+            position: relative;
+            margin: auto;
+            width: 1500px;
+            height: 170px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        h1 {
+            font-size: 40px;
+            transition: font-size 0.2s ease-in-out;
+        }
+
+        #header-fied {
+            width: 800px;
+            height: 50px;
+            line-height: 70px;
+            margin-left: 22.5%;
+            background-color: rgb(255, 255, 255);
+        }
+
+        #fied-left {
+            width: 200px;
+            height: 50px;
+            float: left;
+            line-height: 50px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        #fied-right {
+            width: 300px;
+            height: 50px;
+            float: right;
+            line-height: 50px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        #fied-right ul li {
+            height: 50px;
+            list-style: none;
+            display: inline-block;
+            font-size: 20px;
+            margin-left: 20px;
+        }
+
+        #fied-right ul li:hover {
+            border-bottom: 2px solid green;
+            color: green;
+        }
+
+        #fied-right ul li:last-child:hover {
+            border: none;
+        }
+
+
+        #tooder div {
+            height: 40px;
+            color: #537690;
+            line-height: 40px;
+            text-align: center;
+        }
+
+        .content div {
+            width: 987px;
+            border-radius: 10px;
+            height: 150px;
+            background-color: rgb(112, 161, 163);
+            border: 1px solid grey;
+            margin: auto;
+            margin-top: 40px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 2px 2px rgb(208, 202, 202);
+        }
+
+        .content div:hover {
+            transform: scale(1.01);
+            box-shadow: 0 2px 2px 2px rgb(130, 127, 127);
+        }
+
+        .content div h3 {
+            margin: 20px;
+        }
+
+        .content div p {
+            margin: 20px;
+        }
+
+        .content div span {
+            margin: 10px 20px;
+        }
+
+        .sonright {
+            margin-right: 20px;
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div id="header">
+            <div id="header-fied">
+                <div id="fied-left">
+                    <h1>程序员小刘</h1>
+                </div>
+                <div id="fied-right">
+                    <ul>
+                        <li style="border-bottom: 2px solid green;"><a href="下午练习考试题的头部.html" data-pjax>首页</a></li>
+                        <li class="aa1" id="butt"><a href="上午切换页面.html" data-pjax="">添加</a></li>
+                        <li id="butt1"><a href="上午页面.html" data-pjax="">页面</a></li>
+                        <li data-pjax> <i class="layui-icon layui-icon-search" style="font-size: 25px; color: #537690;"
+                                id="searchCar"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="content" id="pjax-container"></div>
+        <div>
+            <button class="leftntn">上一页</button>
+            <button class="rightntn">下一页</button>
+        </div>
+        <div id="tooder">
+            <div> 2018 - 2023 小刘</div>
+            <div>访问人数 23835 总访问量 28611</div>
+            <div>由 Hexo 驱动 | 主题 Keep v3.6.1</div>
+            <div>京ICP备19029015号-1</div>
+        </div>
+    </div>
+
+    <script>
+        let page = 1;
+
+        let scrollInit = 0;
+        let fSize, fSize1, haderHeight;
+        $(function () {
+            event.preventDefault()
+            $(document).pjax("a[data-pjax]", "#pjax-container", {
+                fragment: "#pjax-container",
+                timeout: 5000,
+            });
+            $(document).on('pjax:start', function () {
+                console.log($("a[data-pjax]"))
+                NProgress.start();
+            });
+            $(document).on('pjax:end', function () { NProgress.done(); });
+        });
+        $(function () {
+            fSize = parseInt($("ul li").css("font-size"));
+            fSize1 = parseInt($("h1").css("font-size"));
+            haderHeight = parseInt($("#header").height())
+            window.onscroll = function () {
+                let sTop = event.target.scrollingElement.scrollTop
+                if (window.scrollY === 0) {
+                    fSize = fSize + fSize * 0.1;
+                    fSize = fSize > 20 ? 20 : fSize;
+                    fSize1 = fSize1 + fSize1 * 0.5;
+                    fSize1 = fSize1 > 40 ? 40 : fSize1;
+                    haderHeight = haderHeight - haderHeight * 0.1;
+                    haderHeight = haderHeight < 70 ? 70 : haderHeight;
+                } else {
+                    fSize = fSize - fSize * 0.1;
+                    fSize = fSize < 14 ? 14 : fSize;
+                    fSize1 = fSize1 - fSize1 * 0.5;
+                    fSize1 = fSize1 < 20 ? 20 : fSize1;
+                    haderHeight = haderHeight + haderHeight * 0.1;
+                    haderHeight = haderHeight > 50 ? 50 : haderHeight;
+                }
+                scrollInit = sTop;
+                console.log(haderHeight);
+                $("ul li").css("font-size", fSize)
+                $("h1").css("font-size", fSize1)
+                $("#header").css("height", haderHeight + "px")
+            };
+        });
+    </script>
+</body>
+
+</html>

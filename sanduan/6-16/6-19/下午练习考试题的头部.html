@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下午练习考试题的头部</title>
+    <link rel="stylesheet" href="../common/layui/css/layui.css">
+    <link rel="stylesheet" href="../common/进度条/进度条.css">
+    <script src="../common/jQuery/jquery-3.6.1.min.js"></script>
+    <script src="../common/layui/layui.js"></script>
+    <script src="../common/进度条/jquery.pjax.js"></script>
+    <script src="../common/进度条/进度条.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            margin: auto;
+        }
+
+
+        #header {
+            position: fixed;
+            z-index: 1;
+            width: 1500px;
+            height: 70px;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: 0 auto;
+            background-color: rgb(255, 255, 255);
+            box-shadow: 0 0 8px rgb(175, 170, 170);
+        }
+
+        #header:hover {
+            box-shadow: 0 0 8px rgb(87, 87, 87);
+        }
+
+        .content {
+            position: relative;
+            margin: auto;
+            margin-top: 75px;
+            width: 1500px;
+            height: 970px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        #tooder {
+            position: relative;
+            margin: auto;
+            width: 1500px;
+            height: 170px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        h1 {
+            font-size: 40px;
+            transition: font-size 0.2s ease-in-out;
+        }
+
+        #header-fied {
+            width: 800px;
+            height: 50px;
+            line-height: 70px;
+            margin-left: 22.5%;
+            background-color: rgb(255, 255, 255);
+        }
+
+        #fied-left {
+            width: 200px;
+            height: 50px;
+            float: left;
+            line-height: 50px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        #fied-right {
+            width: 300px;
+            height: 50px;
+            float: right;
+            line-height: 50px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        #fied-right ul li {
+            height: 50px;
+            list-style: none;
+            display: inline-block;
+            font-size: 20px;
+            margin-left: 20px;
+        }
+
+        #fied-right ul li:hover {
+            border-bottom: 2px solid green;
+            color: green;
+        }
+
+        #fied-right ul li:last-child:hover {
+            border: none;
+        }
+
+
+        #tooder div {
+            height: 40px;
+            color: #537690;
+            line-height: 40px;
+            text-align: center;
+        }
+
+        .content div {
+            width: 987px;
+            border-radius: 10px;
+            height: 150px;
+            background-color: rgb(112, 161, 163);
+            border: 1px solid grey;
+            margin: auto;
+            margin-top: 40px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 2px 2px rgb(208, 202, 202);
+        }
+
+        .content div:hover {
+            transform: scale(1.01);
+            box-shadow: 0 2px 2px 2px rgb(130, 127, 127);
+        }
+
+        .content div h3 {
+            margin: 20px;
+        }
+
+        .shang {
+            position: relative;
+            left: 300px;
+            top: -40px;
+            /* display: none; */
+        }
+
+        .xia {
+            position: relative;
+            top: -40px;
+            left: 1000px;
+        }
+
+        .content div p {
+            line-height: 20px;
+            margin: 20px;
+        }
+
+        .content div span {
+            margin: 10px 20px;
+        }
+
+        .sonright {
+            margin-right: 20px;
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div id="header">
+            <div id="header-fied">
+                <div id="fied-left">
+                    <h1>程序员小刘</h1>
+                </div>
+                <div id="fied-right">
+                    <ul>
+                        <li style="border-bottom: 2px solid green;"><a href="下午练习考试题的头部.html" data-pjax>首页</a></li>
+                        <li class="aa1" id="butt"><a href="上午切换页面.html" data-pjax="">添加</a></li>
+                        <li class="aa1" id="butt1"><a href="上午页面.html" data-pjax="">页面</a></li>
+                        <li> <i class="layui-icon layui-icon-search" style="font-size: 25px; color: #537690;"
+                                id="searchCar"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="content" id="pjax-container"></div>
+        <div class="aaaaaaa">
+            <button type="button" class="layui-btn layui-btn-primary layui-btn-radius shang">上一页</button>
+            <button type="button" class="layui-btn layui-btn-primary layui-btn-radius xia">下一页</button>
+        </div>
+        <div id="tooder">
+            <div> 2018 - 2023 小明</div>
+            <div>访问人数 23835 总访问量 28611</div>
+            <div>由 Hexo 驱动 | 主题 Keep v3.6.1</div>
+            <div>京ICP备19029015号-1</div>
+        </div>
+    </div>
+
+    <script>
+        let DATA = []
+        let bor = [
+            {
+                id: 1,
+                one: "开发随记11",
+                two: "记录每日开发过程中的一些碎片，持续更新",
+                three: "日常开发",
+                four: "dev",
+                fiex: "三个月前",
+            },
+            {
+                id: 2,
+                one: "开发随记22",
+                two: "记录每日开发过程中的一些碎片，持续更新",
+                three: "日常开发",
+                four: "dev",
+                fiex: "三个月前",
+            },
+            {
+                id: 3,
+                one: "开发随记33",
+                two: "记录每日开发过程中的一些碎片，持续更新",
+                three: "日常开发",
+                four: "dev",
+                fiex: "三个月前",
+            },
+            {
+                id: 4,
+                one: "开发随记44",
+                two: "记录每日开发过程中的一些碎片，持续更新",
+                three: "日常开发",
+                four: "dev",
+                fiex: "三个月前",
+            },
+            // {
+            //     id: 5,
+            //     one: "开发随记55",
+            //     two: "记录每日开发过程中的一些碎片，持续更新",
+            //     three: "日常开发",
+            //     four: "dev",
+            //     fiex: "三个月前",
+            // },
+            // {
+            //     id: 6,
+            //     one: "开发随记66",
+            //     two: "记录每日开发过程中的一些碎片，持续更新",
+            //     three: "日常开发",
+            //     four: "dev",
+            //     fiex: "三个月前",
+            // },
+            // {
+            //     id: 7,
+            //     one: "开发随记77",
+            //     two: "记录每日开发过程中的一些碎片，持续更新",
+            //     three: "日常开发",
+            //     four: "dev",
+            //     fiex: "三个月前",
+            // },
+        ];
+        function zhuanhaun() {
+            console.log(bor);
+            if (bor.length < 4) {
+
+            }
+        }
+        let scrollInit = 0;
+        let fSize, fSize1, haderHeight;
+        $(function () {
+            $(document).pjax("a[data-pjax]", "#pjax-container", {
+                fragment: "#pjax-container",
+                timeout: 5000,
+            });
+
+            $(document).on('pjax:start', function () {
+                console.log($("a[data-pjax]"))
+                NProgress.start();
+            });
+            $(document).on('pjax:end', function () { NProgress.done(); });
+        });
+        $(function () {
+            fSize = parseInt($("ul li").css("font-size"));
+            fSize1 = parseInt($("h1").css("font-size"));
+            haderHeight = parseInt($("#header").height())
+            window.onscroll = function () {
+                let sTop = event.target.scrollingElement.scrollTop
+                if (window.scrollY === 0) {
+                    fSize = fSize + fSize * 0.1;
+                    fSize = fSize > 20 ? 20 : fSize;
+                    fSize1 = fSize1 + fSize1 * 0.5;
+                    fSize1 = fSize1 > 40 ? 40 : fSize1;
+
+                    haderHeight = haderHeight - haderHeight * 0.1;
+                    haderHeight = haderHeight < 70 ? 70 : haderHeight;
+                } else {
+
+                    fSize = fSize - fSize * 0.1;
+                    fSize = fSize < 14 ? 14 : fSize;
+                    fSize1 = fSize1 - fSize1 * 0.5;
+                    fSize1 = fSize1 < 20 ? 20 : fSize1;
+
+                    haderHeight = haderHeight + haderHeight * 0.1;
+                    haderHeight = haderHeight > 50 ? 50 : haderHeight;
+                }
+                scrollInit = sTop;
+                console.log(haderHeight);
+                $("ul li").css("font-size", fSize)
+                $("h1").css("font-size", fSize1)
+                $("#header").css("height", haderHeight + "px")
+
+            };
+            // getList()
+            xuanranFun(bor)
+            //     $.getJSON(function (bor) {
+            //         DATA = bor;
+            //         getList();
+            //     });
+            //     $(document).on("pjax:success", function () {
+            //         let page = location.search.match(/page=(\d+)/)[1];
+            //     });
+        });
+        function xuanranFun(bor) {
+            console.log(bor);
+            let html = "";
+            bor.forEach((item, index) => {
+                html += `
+                <div>
+                    <h3>${item.one}</h3>
+                    <p><svg t="1687263960523" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8818" width="16" height="16"><path d="M341.333333 298.666667h384V213.333333h42.666667v85.333334h128v554.666666H170.666667V298.666667h128V213.333333h42.666666v85.333334zM213.333333 341.333333v469.333334h640V341.333333H213.333333z m213.333334 85.333334v42.666666H298.666667v-42.666666h128z" fill="#1296db" p-id="8819"></path></svg>${item.two}</p>
+                    <span>${item.three}</span>
+                    <a>${item.four}</a>
+                    <span><svg t="1687263850673" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7614" width="16" height="16"><path d="M512 32a475.52 475.52 0 0 0-339.2 140.8 481.92 481.92 0 0 0-58.88 71.04 32 32 0 0 0 53.12 35.84 428.16 428.16 0 0 1 50.56-64 416.64 416.64 0 1 1-79.36 476.8 32 32 0 0 0-57.6 28.16A480 480 0 1 0 512 32z" fill="#515151" p-id="7615"></path><path d="M96 64a32 32 0 0 0-32 32v192a32 32 0 0 0 32 32h192a32 32 0 0 0 0-64H128V96a32 32 0 0 0-32-32z" fill="#515151" p-id="7616"></path><path d="M512 512m-64 0a64 64 0 1 0 128 0 64 64 0 1 0-128 0Z" fill="#515151" p-id="7617"></path><path d="M736 768a30.08 30.08 0 0 1-22.4-9.6l-224-224A30.08 30.08 0 0 1 480 512V256a32 32 0 0 1 64 0v242.56l214.4 215.04a30.72 30.72 0 0 1 0 44.8 30.08 30.08 0 0 1-22.4 9.6z" fill="#515151" p-id="7618"></path></svg>${item.fiex}</span>
+                    <a  data-index=${index} class="sonright">阅读全文></a>
+                </div>  
+                `
+            });
+            //  href="查看全文.html"
+            $(".content").html(html)
+            zhuanhaun()
+        };
+        // $(document).pjax("a[data-pjax]", "#pjax-container", {
+        //     fragment: "#pjax-container",
+        //     timeout: 5000,
+        // });
+        // function getList(page = 1, limit = 5) {
+        //     console.log(bor);
+        //     xuanranFun(DATA.slice((page - 1) * limit, page * limit));
+        //     let total = Math.ceil(DATA.length / limit);
+        //     let html = `<div class="page-box">
+        //                 ${page == 1 ? "" : `<a href="index.html?page=${page - 1}"class="shang" data-pjax>上一页</a>`
+        //         }
+        //                 ${page == total ? "" : `<a href="index.html?page=${+page + 1}"class="xia" data-pjax>下一页</a>`
+        //         }
+        //         </div>`;
+        //     $(".aaaaaaa").append(html);
+        // }
+    </script>
+</body>
+
+</html>
+<!-- 日报
+今日学习： 考试题
+今日作业： 已完成50%
+今日问题： 暂无 -->
